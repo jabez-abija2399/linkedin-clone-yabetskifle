@@ -20,6 +20,9 @@
 
   --color-destructive: #cc1016;    /* Errors / Delete */
   --color-destructive-foreground: #ffffff;
+
+  --color-label: #gray-700;
+  --color-label-foreground: #ffffff;
   
   /* ⚪ BACKGROUNDS */
   --color-background: #F3F2EF;     /* The classic light gray background */
