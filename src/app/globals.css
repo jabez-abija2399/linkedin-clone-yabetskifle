@@ -2,44 +2,56 @@
 
 @theme {
   /* 🔵 BRAND COLORS */
-  --color-primary: #0a66c2;        /* LinkedIn Blue */
-  --color-primary-foreground: #ffffff; /* Text on top of primary */
-  --color-primary-hover: #004182; /* Text on top of primary */
+  --color-primary: #0a66c2;
+  /* LinkedIn Blue */
+  --color-primary-foreground: #ffffff;
+  /* Text on top of primary */
+  --color-primary-hover: #004182;
+  /* Text on top of primary */
 
-  --color-secondary: #6B7280;        /*make itgray-500  */
-  --color-secondary-foreground: #ffffff; /* Text on top of primary */
-  --color-secondary-hover: #4B5563; /* Text on top of primary */
+  --color-secondary: #6B7280;
+  /* Gray 500 */
+  --color-secondary-foreground: #ffffff;
+  --color-secondary-hover: #4B5563;
+  /* Gray 600 */
 
-  --color-outline: #0a66c2;        /* LinkedIn Blue */
-  --color-outline-foreground: #ffffff; /* Text on top of primary */
-  --color-outline-hover: #eef3f8; /* Text on top of primary */
+  --color-outline: #0a66c2;
+  /* LinkedIn Blue */
+  --color-outline-foreground: #ffffff;
+  --color-outline-hover: #eef3f8;
+  /* Light Blue 50 */
 
-  --color-ghost: #0a66c2;        /* LinkedIn Blue */
-  --color-ghost-foreground: #ffffff; /* Text on top of primary */
-  --color-ghost-hover: #f3f4f6; /* Text on top of primary */
+  --color-ghost: #0a66c2;
+  --color-ghost-foreground: #ffffff;
+  --color-ghost-hover: #f3f4f6;
+  /* Gray 100 */
 
-  --color-destructive: #cc1016;    /* Errors / Delete */
+  --color-destructive: #cc1016;
+  /* Errors / Delete */
   --color-destructive-foreground: #ffffff;
 
-  --color-label: #gray-700;
+  --color-label: #374151;
+  /* Gray 700 */
   --color-label-foreground: #ffffff;
-  
+
   /* ⚪ BACKGROUNDS */
-  --color-background: #F3F2EF;     /* The classic light gray background */
-  --color-surface: #ffffff;        /* White cards */
+  --color-background: #F3F2EF;
+  /* The classic light gray background */
+  --color-surface: #ffffff;
+  /* White cards */
   --color-surface-foreground: #000000;
-  
+
   /* 🔲 BORDERS & INPUTS */
-  --color-border: #e0e0e0;         /* Light divider lines */
-  --color-input: #edf3f8;          /* Light blue-ish gray inputs */
-  
+  --color-border: #e0e0e0;
+  /* Light divider lines */
+  --color-input: #edf3f8;
+  /* Light blue-ish gray inputs */
+
   /* 📝 TEXT */
-  --color-muted: #666666;          /* Secondary text (dates, titles) */
+  --color-muted: #666666;
+  /* Secondary text (dates, titles) */
   --color-muted-foreground: #000000;
-  
-  /* 🔴 STATUS */
-  --color-destructive: #cc1016;    /* Errors / Delete */
-  --color-destructive-foreground: #ffffff;
+
 }
 
 /* Base Styles */
