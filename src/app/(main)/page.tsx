@@ -2,34 +2,32 @@
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card"; // Import our new components
+import { Sidebar } from "@/components/layout/Sidebar";
+import { PostForm } from "@/components/post/PostForm";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center gap-8 p-10 bg-background min-h-screen">
-      
-      {/* Test Buttons */}
-      <Card className="w-full max-w-md">
-        <CardHeader>
-           <CardTitle>Buttons</CardTitle>
-        </CardHeader>
-        <CardContent className="flex gap-2">
-           <Button>Primary</Button>
-           <Button variant="outline">Outline</Button>
-        </CardContent>
-      </Card>
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+      {/* left column (3/12 width) */}
+      <div className="md:col-span-3">
+         <Sidebar />
+      </div>
 
-      {/* Test Inputs */}
-      <Card className="w-full max-w-md">
-         <CardHeader>
-            <CardTitle>Login</CardTitle>
-         </CardHeader>
-         <CardContent className="space-y-4">
-            <Input label="Email" placeholder="user@example.com" />
-            <Input label="Password" type="password" />
-            <Button className="w-full">Sign In</Button>
-         </CardContent>
-      </Card>
+      {/* Middle colume (6/12 width) */}
+      <div className="md:col-span-6">
+         <PostForm />
 
+         {/* place holder for acution posts - we will build this later */}
+         <div className="text-center p-10 text-muted">No Posts Yet</div>
+      </div>
+
+      {/* right column (3/12 width) */}
+      <div className="hidden md:block md:col-span-3">
+         <div className="rounded-lg bg-surface p-4 border border-border">
+            <h3 className="font-semibold text-sm">Trending News</h3>
+            <p className="text-xs mt-2 text-muted">No News today</p>
+         </div>
+      </div>
     </div>
   );
 }
