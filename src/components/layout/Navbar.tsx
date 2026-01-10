@@ -1,56 +1,118 @@
+"use client"; // <--- 1. This is now a Client Component
+
 import Link from "next/link";
-import { Home, Briefcase, User, MessageSquare, Bell, Search } from "lucide-react";
+import { usePathname } from "next/navigation"; // <--- 2. To check current URL
+import { Home, Briefcase, Users, MessageSquare, Bell, Search } from "lucide-react";
 import { Input } from "../ui/Input";
 
 export function Navbar() {
+    const pathname = usePathname(); // Get current route (e.g., "/jobs")
+
     return (
         <nav className="sticky top-0 z-50 border-b border-border bg-surface shadow-sm">
-            <div className="flex h-14 items-center px-4 max-w-7xl mx-auto justify-between">
+            <div className="flex h-14 items-center px-4 max-w-5xl mx-auto justify-between">
 
                 {/* Left: Logo and search */}
-                <div className="flex items-center gap-4">
-                    <Link href="/" className="mr-4">
-                        <span className="text-primary font-bold text-2xl">LinkedInClone</span>
+                <div className="flex items-center gap-2">
+                    <Link
+                        href="/"
+                        className="
+                            mr-2 
+                            flex items-center justify-center
+                            bg-primary
+                            text-white 
+                            font-bold 
+                            text-[28px]
+                            w-9 h-9
+                            rounded
+                        "
+                    >
+                        in
                     </Link>
 
-
-                    {/* Search Bar (hidden on mobile) */}
+                    {/* Search Bar */}
                     <div className="hidden md:block relative w-64">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted" />
                         <Input 
-                        placeholder="Search" 
-                        className="pl-9 bg-input border-none h-9" />
+                            placeholder="Search" 
+                            className="pl-9 bg-input border-none h-9 rounded-full transition-all focus:w-[280px]" 
+                        />
                     </div>
                 </div>
 
-                {/* Right, navigation icons */}
-                <div className="flex items-center gap-6 sm:gap-8">
-                    <NavLink href="/" icon={<Home className="h-6 w-6" />} label="Home" active />
-                    <NavLink href="/my-network" icon={<User className="h-6 w-6" />} label="My Network" />
-                    <NavLink href="/jobs" icon={<Briefcase className="h-6 w-6" />} label="Jobs" />
-                    <NavLink href="/messages" icon={<MessageSquare className="h-6 w-6" />} label="Messages" />
-                    <NavLink href="/notifications" icon={<Bell className="h-6 w-6" />} label="Notifications" />
+                {/* Right: Navigation Icons */}
+                <ul className="flex h-full items-center gap-6 sm:gap-8">
+                    <NavLink 
+                        href="/" 
+                        icon={Home} 
+                        label="Home" 
+                        isActive={pathname === "/"} 
+                    />
+                    <NavLink 
+                        href="/my-network" 
+                        icon={Users}  // LinkedIn uses "Users" for Network
+                        label="My Network" 
+                        isActive={pathname === "/my-network"} 
+                    />
+                    <NavLink 
+                        href="/jobs" 
+                        icon={Briefcase} 
+                        label="Jobs" 
+                        isActive={pathname === "/jobs"} 
+                    />
+                    <NavLink 
+                        href="/messaging" 
+                        icon={MessageSquare} 
+                        label="Messaging" 
+                        isActive={pathname === "/messaging"} 
+                    />
+                    <NavLink 
+                        href="/notifications" 
+                        icon={Bell} 
+                        label="Notifications" 
+                        isActive={pathname === "/notifications"} 
+                    />
 
-                    {/* Profile Menu Placeholder */}
-                    <div className="flex flex-col items-center gap-1 cursor-pointer">
-                        <User className="h-6 w-6 text-muted hover:text-surface-foreground transition-colors" />
-                        <span className="hidden md:block text-[10px] text-muted">Me</span>
-                    </div>
-                </div>
+                    {/* Profile & Me */}
+                    <li className="flex flex-col items-center justify-center h-full border-b-[2px] border-transparent cursor-pointer min-w-[50px]">
+                        <div className="flex flex-col items-center gap-1 text-gray-500 hover:text-black">
+                             <div className="h-6 w-6 rounded-full bg-gray-300 overflow-hidden">
+                                {/* Placeholder for user image */}
+                             </div>
+                             <span className="hidden md:block text-[12px]">Me ▼</span>
+                        </div>
+                    </li>
+                </ul>
 
             </div>
-
-
         </nav>
     )
 }
 
-// micro-component for Nav Links to keep code clean
-function NavLink({ href, icon, label, active }: { href: string; icon: React.ReactNode; label: string; active?: boolean }) {
+// Micro-component for Nav Links
+interface NavLinkProps {
+    href: string;
+    icon: React.ElementType; // Using ElementType to pass the component itself
+    label: string;
+    isActive: boolean;
+}
+
+function NavLink({ href, icon: Icon, label, isActive }: NavLinkProps) {
     return (
-        <Link href={href} className={`flex flex-col items center gap-1 transition-colors ${active ? "text-surface-foreground" : "text-muted hover:text-surface-foreground"}`}>
-            {icon}
-            <span className="hidden md:block text-[10px]">{label}</span>
-        </Link>
+        <li className={`h-full flex items-center ${isActive ? "border-b-2 border-black" : "border-b-2 border-transparent"}`}>
+            <Link 
+                href={href} 
+                className={`flex flex-col items-center justify-center gap-1 min-w-[50px] transition-colors
+                    ${isActive ? "text-black" : "text-gray-500 hover:text-black"}
+                `}
+            >
+                {/* FILL TRICK: fill={isActive ? "currentColor" : "none"} */}
+                <Icon 
+                    className="h-6 w-6" 
+                    // fill={isActive ? "currentColor" : "none" } 
+                />
+                <span className="hidden md:block text-[12px]">{label}</span>
+            </Link>
+        </li>
     )
 }
