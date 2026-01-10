@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 // define the props for the button
 interface ButtonProps extends
  React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: "primary" | "secondary" | "ghost";
+    variant?: "primary" | "secondary" | "outline" | "ghost";
     size?: "sm" | "md" | "lg";
     isLoading?: boolean;
  }
@@ -19,9 +19,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
         // Define Specific stylles for each variant
         const variantStyles = {
-            primary: "bg-primary text-primary-foreground",
-            secondary: "bg-secondary text-secondary-foreground",
-            ghost: "bg-transparent",
+            primary: "bg-primary text-primary-foreground text-white hover:bg-primary-hover",
+            secondary: "bg-secondary text-secondary-foreground hover:bg-secondary-hover",
+            outline: "bg-transparent border border-primary text-primary hover:bg-outline-hover",
+            ghost: "text-primary-hover hover:bg-ghost-hover",
         };
 
         // Define Specific stylles for each size
