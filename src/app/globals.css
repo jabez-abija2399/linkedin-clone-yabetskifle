@@ -1,5 +1,47 @@
 @import "tailwindcss";
 
-:root {
-  --primary: #0a66c2; /* The LinkedIn Blue */
+@theme {
+  /* 🔵 BRAND COLORS */
+  --color-primary: #0a66c2;        /* LinkedIn Blue */
+  --color-primary-foreground: #ffffff; /* Text on top of primary */
+  --color-primary-hover: #004182; /* Text on top of primary */
+
+  --color-secondary: #6B7280;        /*make itgray-500  */
+  --color-secondary-foreground: #ffffff; /* Text on top of primary */
+  --color-secondary-hover: #4B5563; /* Text on top of primary */
+
+  --color-outline: #0a66c2;        /* LinkedIn Blue */
+  --color-outline-foreground: #ffffff; /* Text on top of primary */
+  --color-outline-hover: #eef3f8; /* Text on top of primary */
+
+  --color-ghost: #0a66c2;        /* LinkedIn Blue */
+  --color-ghost-foreground: #ffffff; /* Text on top of primary */
+  --color-ghost-hover: #f3f4f6; /* Text on top of primary */
+
+  --color-destructive: #cc1016;    /* Errors / Delete */
+  --color-destructive-foreground: #ffffff;
+  
+  /* ⚪ BACKGROUNDS */
+  --color-background: #F3F2EF;     /* The classic light gray background */
+  --color-surface: #ffffff;        /* White cards */
+  --color-surface-foreground: #000000;
+  
+  /* 🔲 BORDERS & INPUTS */
+  --color-border: #e0e0e0;         /* Light divider lines */
+  --color-input: #edf3f8;          /* Light blue-ish gray inputs */
+  
+  /* 📝 TEXT */
+  --color-muted: #666666;          /* Secondary text (dates, titles) */
+  --color-muted-foreground: #000000;
+  
+  /* 🔴 STATUS */
+  --color-destructive: #cc1016;    /* Errors / Delete */
+  --color-destructive-foreground: #ffffff;
+}
+
+/* Base Styles */
+body {
+  background-color: var(--color-background);
+  color: var(--color-surface-foreground);
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
 }
