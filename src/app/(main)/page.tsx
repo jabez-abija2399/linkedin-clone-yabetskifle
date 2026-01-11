@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { PostForm } from "@/components/post/PostForm";
 import { PostCard } from "@/components/post/PostCard";
+import { getPosts } from "@/server/actions/post.actions";
+import { formatDistanceToNow } from "date-fns";
 
 
 // Mock data array
@@ -74,7 +76,19 @@ const MOCK_Posts = [
   }
 ]
 
-export default function Home() {
+interface Post {
+   id: string;
+   author: {
+      name: string;
+      headline: string;
+   };
+   content: string;
+   createdAt: Date;
+}
+
+export default async function Home() {
+   const posts = await getPosts();
+   console.log(posts);
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
       {/* left column (3/12 width) */}
@@ -87,15 +101,17 @@ export default function Home() {
          <PostForm />
 
          {/*  map through MOCK_Posts */}
-         {MOCK_Posts.map((post) => (
-            <PostCard 
-               key={post.id}
-               authorName={post.authorName}
-               authorHeadline={post.authorHeadline}
-               content={post.content}
-               createdAt={post.createdAt}
-            />
-         ))}
+        {posts.map((post: Post) => (
+    <PostCard  
+        key={post.id}
+        authorName={post.author.name || "Anonymous"} 
+        authorHeadline={post.author.headline || ""} 
+        content={post.content}
+        // For now, let's just turn the date into a string. 
+        // Later we can use 'date-fns' to make it say "2h ago"
+        createdAt={formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })} 
+    />
+))}
       </div>
 
       {/* right column (3/12 width) */}
