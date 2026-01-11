@@ -1,6 +1,7 @@
 import { MessageCircle, MoreHorizontal, Repeat2, Send, ThumbsUp } from "lucide-react";
 import Button from "../ui/Button";
 import { Card, CardContent, CardHeader } from "../ui/Card";
+import { ActionButtons } from "./PostActions";
 
 
 interface PostCardProps {
@@ -43,7 +44,7 @@ export function PostCard({ authorName, authorHeadline, content, createdAt}: Post
 
             {/* Interactions bar */}
             <div className="px-4 py-1 border-t border-border flex justify-between">
-                <ActionButtons icon={<ThumbsUp className="h-5 w-5" />} label="Like" />
+                <ActionButtons icon={<ThumbsUp className="h-5 w-5 " />} label="Like" />
                 <ActionButtons icon={<MessageCircle className="h-5 w-5" />} label="Comment" />
                 <ActionButtons icon={<Repeat2 className="h-5 w-5" />} label="Repost" />
                 <ActionButtons icon={<Send className="h-5 w-5" />} label="Send" />
@@ -52,14 +53,3 @@ export function PostCard({ authorName, authorHeadline, content, createdAt}: Post
     )
 }
 
-function ActionButtons({ icon, label }: { icon: React.ReactNode; label: string }) {
-    return (
-            <button className="flex items-center gap-2 
-            rounded-md p-2 hover:bg-gray-100 transition-colors 
-            cursor-pointer text-muted font-semibold text-sm flex-1 justify-center">
-                {icon}
-                <span className="hidden sm:inline">{label}</span>
-            </button>
-        
-    )
-}
