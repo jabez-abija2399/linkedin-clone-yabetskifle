@@ -5,14 +5,15 @@ import { ActionButtons } from "./PostActions";
 
 
 interface PostCardProps {
+    postId: string;
     authorName: string;
     authorHeadline: string;
     content: string;
     createdAt: string;
-    
+    initialLike?: boolean;
 }
 
-export function PostCard({ authorName, authorHeadline, content, createdAt}: PostCardProps) {
+export function PostCard({postId, authorName, authorHeadline, content, createdAt, initialLike}: PostCardProps) {
     return (
         <Card className="overflow-hidden">
             <CardHeader className="p-4 flex flex-row items-start justify-between space-y-0">
@@ -44,10 +45,10 @@ export function PostCard({ authorName, authorHeadline, content, createdAt}: Post
 
             {/* Interactions bar */}
             <div className="px-4 py-1 border-t border-border flex justify-between">
-                <ActionButtons icon={<ThumbsUp className="h-5 w-5 " />} label="Like" />
-                <ActionButtons icon={<MessageCircle className="h-5 w-5" />} label="Comment" />
-                <ActionButtons icon={<Repeat2 className="h-5 w-5" />} label="Repost" />
-                <ActionButtons icon={<Send className="h-5 w-5" />} label="Send" />
+                <ActionButtons initialLike={initialLike} postId={postId} icon={<ThumbsUp className="h-5 w-5 " />} label="Like" />
+                <ActionButtons initialLike={initialLike} postId={postId} icon={<MessageCircle className="h-5 w-5" />} label="Comment" />
+                <ActionButtons initialLike={initialLike} postId={postId} icon={<Repeat2 className="h-5 w-5" />} label="Repost" />
+                <ActionButtons initialLike={initialLike} postId={postId} icon={<Send className="h-5 w-5" />} label="Send" />
             </div>
         </Card>
     )

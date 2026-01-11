@@ -42,6 +42,7 @@ export async function getPosts() {
             orderBy: { createdAt: "desc" },
             include: {
                 author: true, // This brings in the name, image, and headline!
+                likes: true, 
             }
         });
         return posts;
@@ -50,3 +51,4 @@ export async function getPosts() {
         return [];
     }
 }
+

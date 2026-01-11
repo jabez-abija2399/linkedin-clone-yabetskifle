@@ -84,11 +84,14 @@ interface Post {
    };
    content: string;
    createdAt: Date;
+   likes: {
+      userId: string;
+   }[];
 }
 
 export default async function Home() {
    const posts = await getPosts();
-   console.log(posts);
+   const myUserId = "cmka10j6l0000ux9l430r1vte"; 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
       {/* left column (3/12 width) */}
@@ -103,10 +106,12 @@ export default async function Home() {
          {/*  map through MOCK_Posts */}
         {posts.map((post: Post) => (
     <PostCard  
+    postId={post.id}
         key={post.id}
         authorName={post.author.name || "Anonymous"} 
         authorHeadline={post.author.headline || ""} 
         content={post.content}
+        initialLike={post.likes.some(like => like.userId === myUserId)}
         // For now, let's just turn the date into a string. 
         // Later we can use 'date-fns' to make it say "2h ago"
         createdAt={formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })} 
