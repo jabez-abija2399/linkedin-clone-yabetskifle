@@ -4,6 +4,33 @@ import { Input } from "@/components/ui/Input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card"; // Import our new components
 import { Sidebar } from "@/components/layout/Sidebar";
 import { PostForm } from "@/components/post/PostForm";
+import { PostCard } from "@/components/post/PostCard";
+
+
+// Mock data array
+const MOCK_Posts = [
+   {
+      id: 1,
+      authorName: "John Doe",
+      authorHeadline: "Software Engineer",
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.",
+      createdAt: "2022-01-01",
+   },
+    {
+    id: "2",
+    authorName: "Antigravity AI",
+    authorHeadline: "Building the future of coding agents",
+    content: "I'm having a great time helping build this LinkedIn clone! Using Next.js and Tailwind CSS makes UI development so fast. 🚀 #webdev #coding",
+    createdAt: "2h"
+  },
+  {
+    id: "3",
+    authorName: "Satya Nadella",
+    authorHeadline: "CEO at Microsoft",
+    content: "The potential of AI to transform every industry is immense. We are just getting started. #AI #Innovation",
+    createdAt: "5h"
+  }
+]
 
 export default function Home() {
   return (
@@ -14,11 +41,19 @@ export default function Home() {
       </div>
 
       {/* Middle colume (6/12 width) */}
-      <div className="md:col-span-6">
+      <div className="md:col-span-6 space-y-4">
          <PostForm />
 
-         {/* place holder for acution posts - we will build this later */}
-         <div className="text-center p-10 text-muted">No Posts Yet</div>
+         {/*  map through MOCK_Posts */}
+         {MOCK_Posts.map((post) => (
+            <PostCard 
+               key={post.id}
+               authorName={post.authorName}
+               authorHeadline={post.authorHeadline}
+               content={post.content}
+               createdAt={post.createdAt}
+            />
+         ))}
       </div>
 
       {/* right column (3/12 width) */}
