@@ -24,7 +24,7 @@ export async function createPost(formData:FormData){
         await prisma.post.create({
             data: {
                 content: validated.data.content,
-                authorId: "clxxxx....", // you will need to create 1 user in your DB manually or use  astring
+                authorId: "cmka10j6l0000ux9l430r1vte", // you will need to create 1 user in your DB manually or use  astring
             },
         });
 
