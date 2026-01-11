@@ -29,6 +29,48 @@ const MOCK_Posts = [
     authorHeadline: "CEO at Microsoft",
     content: "The potential of AI to transform every industry is immense. We are just getting started. #AI #Innovation",
     createdAt: "5h"
+  },
+  {
+      id: 4,
+      authorName: "John Doe",
+      authorHeadline: "Software Engineer",
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.",
+      createdAt: "2022-01-01",
+   },
+    {
+    id: "5",
+    authorName: "Antigravity AI",
+    authorHeadline: "Building the future of coding agents",
+    content: "I'm having a great time helping build this LinkedIn clone! Using Next.js and Tailwind CSS makes UI development so fast. 🚀 #webdev #coding",
+    createdAt: "2h"
+  },
+  {
+    id: "6",
+    authorName: "Satya Nadella",
+    authorHeadline: "CEO at Microsoft",
+    content: "The potential of AI to transform every industry is immense. We are just getting started. #AI #Innovation",
+    createdAt: "5h"
+  },
+  {
+      id: "7",
+      authorName: "John Doe",
+      authorHeadline: "Software Engineer",
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.",
+      createdAt: "2022-01-01",
+   },
+    {
+    id: "8",
+    authorName: "Antigravity AI",
+    authorHeadline: "Building the future of coding agents",
+    content: "I'm having a great time helping build this LinkedIn clone! Using Next.js and Tailwind CSS makes UI development so fast. 🚀 #webdev #coding",
+    createdAt: "2h"
+  },
+  {
+    id: "9",
+    authorName: "Satya Nadella",
+    authorHeadline: "CEO at Microsoft",
+    content: "The potential of AI to transform every industry is immense. We are just getting started. #AI #Innovation",
+    createdAt: "5h"
   }
 ]
 
