@@ -12,9 +12,10 @@ interface PostCardProps {
     content: string;
     createdAt: string;
     initialLike?: boolean;
+    comments?: any[];
 }
 
-export function PostCard({postId, authorName, authorHeadline, content, createdAt, initialLike}: PostCardProps) {
+export function PostCard({ postId, authorName, authorHeadline, content, createdAt, initialLike, comments }: PostCardProps) {
     return (
         <Card className="overflow-hidden">
             <CardHeader className="p-4 flex flex-row items-start justify-between space-y-0">
@@ -52,7 +53,11 @@ export function PostCard({postId, authorName, authorHeadline, content, createdAt
                 <ActionButtons initialLike={initialLike} postId={postId} icon={<Send className="h-5 w-5" />} label="Send" />
             </div> */}
 
-            <PostInteraction postId={postId} initialLike={initialLike} />
+            <PostInteraction
+                postId={postId}
+                initialLike={initialLike}
+                comments={comments}
+            />
 
         </Card>
     )
