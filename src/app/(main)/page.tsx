@@ -87,11 +87,24 @@ interface Post {
    likes: {
       userId: string;
    }[];
+   comments: {
+      id: string;
+      content: string;
+      createdAt: Date;
+      author: {
+         name: string | null;
+         headline: string | null;
+      };
+   }[];
 }
+
 
 export default async function Home() {
    const posts = await getPosts();
    const myUserId = "cmka10j6l0000ux9l430r1vte";
+
+
+
    return (
       <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
          {/* left column (3/12 width) */}
@@ -112,6 +125,7 @@ export default async function Home() {
                   authorHeadline={post.author.headline || ""}
                   content={post.content || ""}
                   initialLike={post.likes.some(like => like.userId === myUserId)}
+                  comments={post.comments}
                   // For now, let's just turn the date into a string. 
                   // Later we can use 'date-fns' to make it say "2h ago"
                   createdAt={formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
