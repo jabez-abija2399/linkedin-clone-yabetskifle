@@ -2,6 +2,7 @@ import { MessageCircle, MoreHorizontal, Repeat2, Send, ThumbsUp } from "lucide-r
 import Button from "../ui/Button";
 import { Card, CardContent, CardHeader } from "../ui/Card";
 import { ActionButtons } from "./PostActions";
+import { PostInteraction } from "./PostInteraction";
 
 
 interface PostCardProps {
@@ -44,12 +45,15 @@ export function PostCard({postId, authorName, authorHeadline, content, createdAt
             </CardContent>
 
             {/* Interactions bar */}
-            <div className="px-4 py-1 border-t border-border flex justify-between">
+            {/* <div className="px-4 py-1 border-t border-border flex justify-between">
                 <ActionButtons initialLike={initialLike} postId={postId} icon={<ThumbsUp className="h-5 w-5 " />} label="Like" />
                 <ActionButtons initialLike={initialLike} postId={postId} icon={<MessageCircle className="h-5 w-5" />} label="Comment" />
                 <ActionButtons initialLike={initialLike} postId={postId} icon={<Repeat2 className="h-5 w-5" />} label="Repost" />
                 <ActionButtons initialLike={initialLike} postId={postId} icon={<Send className="h-5 w-5" />} label="Send" />
-            </div>
+            </div> */}
+
+            <PostInteraction postId={postId} initialLike={initialLike} />
+
         </Card>
     )
 }
