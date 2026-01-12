@@ -43,7 +43,14 @@ export async function getPosts() {
             include: {
                 author: true, // This brings in the name, image, and headline!
                 likes: true, 
+                comments: {
+                    include: {
+                        author: true,
+                    },
+                    orderBy: { createdAt: "desc" },
+                }
             }
+
         });
         return posts;
     } catch (error) {
