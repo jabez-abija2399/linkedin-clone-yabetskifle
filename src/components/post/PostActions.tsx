@@ -4,15 +4,26 @@ import { ThumbsUp } from "lucide-react";
 import { useState } from "react";
 import { toggleLike } from "@/server/actions/like.actions";
 
-export function ActionButtons({ icon, label, postId ,initialLike }:
-     { icon: React.ReactNode; label: string; postId?: string; initialLike?: boolean }) {
+interface ActionButtonsProps {
+    icon: React.ReactNode;
+    label: string;
+    postId?: string;
+    initialLike?: boolean;
+    onClick?: () => void;
+}
+
+export function ActionButtons({ icon, label, postId ,initialLike, onClick }: ActionButtonsProps) {
     const [isActive, setIsActive] = useState(initialLike || false)
     
     const handleLike = async () => {
-        if (!postId || label !== "Like")  return
+        // if (!postId || label !== "Like")  return
+        if (label === "Like" && postId) {
+            await toggleLike(postId)
+            setIsActive(!isActive)
+        }
+        if (onClick) onClick()
         
-        await toggleLike(postId)
-        setIsActive(!isActive)
+        
     }
 
     return (
