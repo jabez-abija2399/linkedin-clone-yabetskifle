@@ -107,8 +107,9 @@ export default async function Home() {
    const user = session?.user;
    // const myUserId = "cmka10j6l0000ux9l430r1vte";
 
+   // src/app/(main)/page.tsx
    if (!session?.user?.id) {
-      return { error: "Unauthorized" }
+      return redirect("/login");
    }
    const myUserId = session.user.id;
 
@@ -122,15 +123,15 @@ export default async function Home() {
 
          {/* Middle colume (6/12 width) */}
          <div className="md:col-span-6 space-y-4">
-            {user ? <PostForm /> : 
-            <Card>
-               <CardHeader>
-                  <CardTitle>
-                     Please sign in to post
-                  </CardTitle>
-               </CardHeader>
-            </Card>
-            
+            {user ? <PostForm /> :
+               <Card>
+                  <CardHeader>
+                     <CardTitle>
+                        Please sign in to post
+                     </CardTitle>
+                  </CardHeader>
+               </Card>
+
             }
 
             {/*  map through MOCK_Posts */}
