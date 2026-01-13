@@ -3,6 +3,7 @@ import Button from "../ui/Button";
 import { Card, CardContent, CardHeader } from "../ui/Card";
 import { ActionButtons } from "./PostActions";
 import { PostInteraction } from "./PostInteraction";
+import Image from "next/image";
 
 
 interface PostCardProps {
@@ -10,12 +11,14 @@ interface PostCardProps {
     authorName: string;
     authorHeadline: string;
     content: string;
+    image?: string | null;
     createdAt: string;
     initialLike?: boolean;
     comments?: any[];
 }
 
-export function PostCard({ postId, authorName, authorHeadline, content, createdAt, initialLike, comments }: PostCardProps) {
+export function PostCard({ postId, authorName, authorHeadline, content, image, createdAt, initialLike, comments }: PostCardProps) {
+    
     return (
         <Card className="overflow-hidden">
             <CardHeader className="p-4 flex flex-row items-start justify-between space-y-0">
@@ -44,6 +47,18 @@ export function PostCard({ postId, authorName, authorHeadline, content, createdA
             <CardContent className="px-4 py-3">
                 <p className="text-sm leading-relaxed">{content}</p>
             </CardContent>
+
+            {/* Post Image - Only shows if image exists */}
+            {image && (
+                <div className="relative w-full h-96 bg-gray-100">
+                    <Image
+                        src={image}
+                        alt="Post image"
+                        fill
+                        className="object-contain"
+                    />
+                </div>
+            )}
 
             {/* Interactions bar */}
             {/* <div className="px-4 py-1 border-t border-border flex justify-between">
