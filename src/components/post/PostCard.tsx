@@ -4,10 +4,12 @@ import { Card, CardContent, CardHeader } from "../ui/Card";
 import { ActionButtons } from "./PostActions";
 import { PostInteraction } from "./PostInteraction";
 import Image from "next/image";
+import Link from "next/link";
 
 
 interface PostCardProps {
     postId: string;
+    authorId: string;
     authorName: string;
     authorHeadline: string;
     content: string;
@@ -17,8 +19,8 @@ interface PostCardProps {
     comments?: any[];
 }
 
-export function PostCard({ postId, authorName, authorHeadline, content, image, createdAt, initialLike, comments }: PostCardProps) {
-    
+export function PostCard({ postId, authorId, authorName, authorHeadline, content, image, createdAt, initialLike, comments }: PostCardProps) {
+
     return (
         <Card className="overflow-hidden">
             <CardHeader className="p-4 flex flex-row items-start justify-between space-y-0">
@@ -27,9 +29,11 @@ export function PostCard({ postId, authorName, authorHeadline, content, image, c
                     <div className="h-12 w-12 rounded-full bg-gray-300 flex-shrink-0" />
 
                     <div>
-                        <h4 className="font-semibold text-sm hover:text-primary hover:underline cursor-pointer">
-                            {authorName}
-                        </h4>
+                        <Link href={`/profile/${authorId}`}>
+                            <h4 className="font-semibold text-sm hover:text-primary hover:underline cursor-pointer">
+                                {authorName}
+                            </h4>
+                        </Link>
                         <p className="text-xs text-muted line-clamp-1">
                             {authorHeadline}
                         </p>

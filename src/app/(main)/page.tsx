@@ -81,6 +81,7 @@ const MOCK_Posts = [
 interface Post {
    id: string;
    author: {
+      id: string;
       name: string | null;
       headline: string | null;
    };
@@ -140,6 +141,7 @@ export default async function Home() {
                <PostCard
                   postId={post.id}
                   key={post.id}
+                  authorId={post.author.id} 
                   authorName={post.author.name || "Anonymous"}
                   authorHeadline={post.author.headline || ""}
                   content={post.content || ""}
