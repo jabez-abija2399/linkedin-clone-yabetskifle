@@ -6,6 +6,7 @@ import { PostCard } from "@/components/post/PostCard";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import { MapPin, Briefcase, Calendar } from "lucide-react";
+import { EditProfileModal } from "../EditProfileModel";
 
 // Get user profile data
 async function getUserProfile(userId: string) {
@@ -96,6 +97,18 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                             </div>
                             {/* We'll add connections count later */}
                         </div>
+
+                        {/* Edit Profile Button - Only show on own profile */}
+                        {isOwnProfile && (
+                            <div className="mt-4">
+                                <EditProfileModal
+                                    currentHeadline={user.headline}
+                                    currentAbout={user.about}
+                                    currentLocation={user.location}
+                                />
+                            </div>
+                        )}
+
                     </div>
                 </CardContent>
             </Card>
@@ -115,7 +128,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                                 <PostCard
                                     key={post.id}
                                     postId={post.id}
-                                    authorId={post.author.id}       
+                                    authorId={post.author.id}
                                     authorName={post.author.name || "Anonymous"}
                                     authorHeadline={post.author.headline || ""}
                                     content={post.content || ""}
