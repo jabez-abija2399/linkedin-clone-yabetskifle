@@ -1,4 +1,5 @@
 'use server'
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { postSchema } from "@/schemas/post.schema";
 import { revalidatePath } from "next/cache";
@@ -7,6 +8,12 @@ import { revalidatePath } from "next/cache";
 
 
 export async function createPost(formData: FormData) {
+    const session = await auth()
+
+    if (!session?.user?.id) {
+        return { error: "Unauthorized" }
+    }
+
     // Extract the data from the form
     const content = formData.get("content") as string;
 
@@ -24,7 +31,7 @@ export async function createPost(formData: FormData) {
         await prisma.post.create({
             data: {
                 content: validated.data.content,
-                authorId: "cmka10j6l0000ux9l430r1vte", // you will need to create 1 user in your DB manually or use  astring
+                authorId: session.user.id,
             },
         });
 
