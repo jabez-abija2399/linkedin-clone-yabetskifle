@@ -4,9 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation"; // <--- 2. To check current URL
 import { Home, Briefcase, Users, MessageSquare, Bell, Search } from "lucide-react";
 import { Input } from "../ui/Input";
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/Card";
+import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
+import Button from "../ui/Button";
 
 export function Navbar() {
     const pathname = usePathname(); // Get current route (e.g., "/jobs")
+    const [meActive, setMeActive] = useState(false);
+    const { data: session } = useSession();
 
     return (
         <nav className="sticky top-0 z-50 border-b border-border bg-surface shadow-sm">
@@ -33,54 +40,99 @@ export function Navbar() {
                     {/* Search Bar */}
                     <div className="hidden md:block relative w-64">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted" />
-                        <Input 
-                            placeholder="Search" 
-                            className="pl-9 bg-input border-none h-9 rounded-full transition-all focus:w-[280px]" 
+                        <Input
+                            placeholder="Search"
+                            className="pl-9 bg-input border-none h-9 rounded-full transition-all focus:w-[280px]"
                         />
                     </div>
                 </div>
 
                 {/* Right: Navigation Icons */}
                 <ul className="flex h-full items-center gap-6 sm:gap-8">
-                    <NavLink 
-                        href="/" 
-                        icon={Home} 
-                        label="Home" 
-                        isActive={pathname === "/"} 
+                    <NavLink
+                        href="/"
+                        icon={Home}
+                        label="Home"
+                        isActive={pathname === "/"}
                     />
-                    <NavLink 
-                        href="/my-network" 
+                    <NavLink
+                        href="/my-network"
                         icon={Users}  // LinkedIn uses "Users" for Network
-                        label="My Network" 
-                        isActive={pathname === "/my-network"} 
+                        label="My Network"
+                        isActive={pathname === "/my-network"}
                     />
-                    <NavLink 
-                        href="/jobs" 
-                        icon={Briefcase} 
-                        label="Jobs" 
-                        isActive={pathname === "/jobs"} 
+                    <NavLink
+                        href="/jobs"
+                        icon={Briefcase}
+                        label="Jobs"
+                        isActive={pathname === "/jobs"}
                     />
-                    <NavLink 
-                        href="/messaging" 
-                        icon={MessageSquare} 
-                        label="Messaging" 
-                        isActive={pathname === "/messaging"} 
+                    <NavLink
+                        href="/messaging"
+                        icon={MessageSquare}
+                        label="Messaging"
+                        isActive={pathname === "/messaging"}
                     />
-                    <NavLink 
-                        href="/notifications" 
-                        icon={Bell} 
-                        label="Notifications" 
-                        isActive={pathname === "/notifications"} 
+                    <NavLink
+                        href="/notifications"
+                        icon={Bell}
+                        label="Notifications"
+                        isActive={pathname === "/notifications"}
                     />
 
                     {/* Profile & Me */}
-                    <li className="flex flex-col items-center justify-center h-full border-b-[2px] border-transparent cursor-pointer min-w-[50px]">
-                        <div className="flex flex-col items-center gap-1 text-gray-500 hover:text-black">
-                             <div className="h-6 w-6 rounded-full bg-gray-300 overflow-hidden">
-                                {/* Placeholder for user image */}
-                             </div>
-                             <span className="hidden md:block text-[12px]">Me ▼</span>
+                    <li className="relative flex flex-col items-center justify-center h-full border-b-[2px] border-transparent cursor-pointer min-w-[50px]">
+                        <div onClick={() => setMeActive(!meActive)} className="flex flex-col items-center gap-1 text-gray-500 hover:text-black">
+                            <div className="h-6 w-6 rounded-full bg-gray-300 overflow-hidden relative">
+                                <Image
+                                    src={session?.user?.image || "/images/placeholder.jpg"}
+                                    alt="User"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <span className="hidden md:block text-[12px]">Me ▼</span>
                         </div>
+                        {meActive && (
+                            <Card className="absolute top-[120%] right-0 w-64 shadow-xl border border-border z-[100]">
+                                <CardContent className="p-0">
+                                    <div className="p-4 border-b border-border">
+                                        <div className="flex gap-2">
+                                            <div className="h-12 w-12 rounded-full overflow-hidden relative border border-border">
+                                                <Image
+                                                    src={session?.user?.image || "/images/placeholder.jpg"}
+                                                    alt="User"
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="font-semibold text-sm truncate">{session?.user?.name}</p>
+                                                <p className="text-xs text-muted truncate">Software Developer</p>
+                                            </div>
+                                        </div>
+                                        <Button variant="outline" className="w-full mt-3 rounded-full text-xs py-1 h-7 text-primary border-primary hover:bg-blue-50">
+                                            View Profile
+                                        </Button>
+                                    </div>
+
+                                    <div className="p-2 border-b border-border">
+                                        <p className="px-2 py-1 text-sm font-semibold">Account</p>
+                                        <p className="px-2 py-1 text-xs text-muted hover:underline cursor-pointer">Settings & Privacy</p>
+                                        <p className="px-2 py-1 text-xs text-muted hover:underline cursor-pointer">Help</p>
+                                    </div>
+
+                                    <div className="p-2">
+                                        <button
+                                            onClick={() => signOut()}
+                                            className="w-full text-left px-2 py-1 text-xs text-muted hover:underline"
+                                        >
+                                            Sign Out
+                                        </button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        )}
                     </li>
                 </ul>
 
@@ -100,16 +152,16 @@ interface NavLinkProps {
 function NavLink({ href, icon: Icon, label, isActive }: NavLinkProps) {
     return (
         <li className={`h-full flex items-center ${isActive ? "border-b-2 border-black" : "border-b-2 border-transparent"}`}>
-            <Link 
-                href={href} 
+            <Link
+                href={href}
                 className={`flex flex-col items-center justify-center gap-1 min-w-[50px] transition-colors
                     ${isActive ? "text-black" : "text-gray-500 hover:text-black"}
                 `}
             >
                 {/* FILL TRICK: fill={isActive ? "currentColor" : "none"} */}
-                <Icon 
-                    className="h-6 w-6" 
-                    // fill={isActive ? "currentColor" : "none" } 
+                <Icon
+                    className="h-6 w-6"
+                // fill={isActive ? "currentColor" : "none" } 
                 />
                 <span className="hidden md:block text-[12px]">{label}</span>
             </Link>
