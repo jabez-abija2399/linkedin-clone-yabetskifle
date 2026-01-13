@@ -1,11 +1,17 @@
 "use server"
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 
 export async function CreateComment(content: string, postId: string) {
-    const userId = "cmka10j6l0000ux9l430r1vte"; // Use our seed user ID for now
+    const session = await auth()
+    const userId = session?.user?.id
     
+    if (!userId) {
+        return { error: "Unauthorized" }
+    }
+
     if(!content || !postId) {
         return { error: "Invalid comment data" }
     }
