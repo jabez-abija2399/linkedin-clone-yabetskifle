@@ -7,6 +7,8 @@ import { PostForm } from "@/components/post/PostForm";
 import { PostCard } from "@/components/post/PostCard";
 import { getPosts } from "@/server/actions/post.actions";
 import { formatDistanceToNow } from "date-fns";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 
 // Mock data array
@@ -101,8 +103,14 @@ interface Post {
 
 export default async function Home() {
    const posts = await getPosts();
-   const myUserId = "cmka10j6l0000ux9l430r1vte";
+   const session = await auth();
+   const user = session?.user;
+   // const myUserId = "cmka10j6l0000ux9l430r1vte";
 
+   if (!session?.user?.id) {
+      return { error: "Unauthorized" }
+   }
+   const myUserId = session.user.id;
 
 
    return (
@@ -114,7 +122,16 @@ export default async function Home() {
 
          {/* Middle colume (6/12 width) */}
          <div className="md:col-span-6 space-y-4">
-            <PostForm />
+            {user ? <PostForm /> : 
+            <Card>
+               <CardHeader>
+                  <CardTitle>
+                     Please sign in to post
+                  </CardTitle>
+               </CardHeader>
+            </Card>
+            
+            }
 
             {/*  map through MOCK_Posts */}
             {posts.map((post: Post) => (
