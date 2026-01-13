@@ -85,6 +85,7 @@ interface Post {
       headline: string | null;
    };
    content: string | null;
+   image: string | null;
    createdAt: Date;
    likes: {
       userId: string;
@@ -144,6 +145,7 @@ export default async function Home() {
                   content={post.content || ""}
                   initialLike={post.likes.some(like => like.userId === myUserId)}
                   comments={post.comments}
+                  image={post?.image}
                   // For now, let's just turn the date into a string. 
                   // Later we can use 'date-fns' to make it say "2h ago"
                   createdAt={formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
