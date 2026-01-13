@@ -1,24 +1,43 @@
 import { Card, CardContent } from "@/components/ui/Card";
 import { User } from "lucide-react";
+import Image from "next/image";
 
-export function Sidebar() {
+// interface User {
+//     name: string;
+//     headline?: string;
+//     about?: string;
+//     location?: string;
+//     email?: string;
+//     image?: string;
+// }
+
+export function Sidebar({ user }: { user?: any }) {
   return (
     <aside className="w-full space-y-2">
       <Card className="overflow-hidden">
         {/* Banner Area */}
         <div className="h-14 bg-primary/20 bg-gradient-to-r from-primary to-blue-400" />
-        
+
         <CardContent className="relative flex flex-col items-center p-4">
           {/* Avatar - Positioned to overlap the banner */}
-          <div className="absolute -top-8 h-16 w-16 rounded-full border-2 border-white bg-gray-200 p-1">
-             <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300">
-               <User className="h-10 w-10 text-gray-500" />
-             </div>
+          <div className="absolute -top-10 h-20 w-20 rounded-full border-2 border-white bg-surface p-0.5 overflow-hidden">
+            <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300 relative overflow-hidden">
+              {user?.image ? (
+                <Image
+                  src={user.image}
+                  alt={user.name || "User"}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <User className="h-12 w-12 text-gray-500" />
+              )}
+            </div>
           </div>
-          
+
           <div className="mt-8 text-center">
-            <h3 className="text-lg font-semibold hover:underline cursor-pointer">Your Name</h3>
-            <p className="text-xs text-muted">Software Engineer at Learning Inc.</p>
+            <h3 className="text-lg font-semibold hover:underline cursor-pointer">{user?.name}</h3>
+            <p className="text-xs text-muted">{user?.headline}</p>
           </div>
 
           <hr className="my-4 w-full border-border" />
@@ -36,15 +55,15 @@ export function Sidebar() {
           </div>
         </CardContent>
       </Card>
-      
+
       {/* Bottom Sidebar Item (Sticky or Static) */}
       <Card className="p-3">
-         <p className="text-xs font-semibold">Recent</p>
-         <div className="mt-2 space-y-2 text-xs text-muted font-medium">
-            <p className="hover:bg-gray-100 p-1 rounded cursor-pointer"># nextjs</p>
-            <p className="hover:bg-gray-100 p-1 rounded cursor-pointer"># reactjs</p>
-            <p className="hover:bg-gray-100 p-1 rounded cursor-pointer"># webdev</p>
-         </div>
+        <p className="text-xs font-semibold">Recent</p>
+        <div className="mt-2 space-y-2 text-xs text-muted font-medium">
+          <p className="hover:bg-gray-100 p-1 rounded cursor-pointer"># nextjs</p>
+          <p className="hover:bg-gray-100 p-1 rounded cursor-pointer"># reactjs</p>
+          <p className="hover:bg-gray-100 p-1 rounded cursor-pointer"># webdev</p>
+        </div>
       </Card>
     </aside>
   );
