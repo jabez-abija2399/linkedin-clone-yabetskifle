@@ -14,6 +14,8 @@ export function PostForm() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+
 
   // REF: A "remote control" for the hidden file input
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -22,6 +24,7 @@ export function PostForm() {
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]; // Get the first file
     if (file) {
+      
       setImageFile(file); // Store the actual file (to send to server)
 
       // Create a preview URL using FileReader
@@ -46,9 +49,11 @@ export function PostForm() {
   async function handleAction(formData: FormData) {
     // If user selected an image, add it to the form data
     if (imageFile) {
+      setIsUploading(true);
       formData.append("image", imageFile);
     }
     const result = await createPost(formData);
+    setIsUploading(false);
     if (result.success) {
       toast.success("Post created successfully");
       setIsOpen(false);
@@ -160,7 +165,7 @@ export function PostForm() {
           {/* Submit button */}
           <div className="flex justify-end pt-4 border-t">
             <Button type="submit" className="rounded-full px-6">
-              Post
+              {isUploading ? "Posting..." : "Post"}
             </Button>
           </div>
         </form>
