@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // <--- 2. To check current URL
-import { Home, Briefcase, Users, MessageSquare, Bell, Search } from "lucide-react";
+import { Home, Briefcase, Users, MessageSquare, Bell, Search, X } from "lucide-react";
 import { Input } from "../ui/Input";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/Card";
@@ -13,6 +13,7 @@ import Button from "../ui/Button";
 export function Navbar() {
     const pathname = usePathname(); // Get current route (e.g., "/jobs")
     const [meActive, setMeActive] = useState(false);
+    const [showSearch, setShowSearch] = useState(false);
     const { data: session } = useSession();
 
     return (
@@ -37,14 +38,40 @@ export function Navbar() {
                         in
                     </Link>
 
-                    {/* Search Bar */}
-                    <div className="hidden md:block relative w-64">
-                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted" />
-                        <Input
-                            placeholder="Search"
-                            className="pl-9 bg-input border-none h-9 rounded-full transition-all focus:w-[280px]"
-                        />
-                    </div>
+                    <div className="flex-1 max-w-md mx-4 relative">
+  {/* Desktop search - always visible */}
+  <div className="hidden md:flex items-center gap-2 bg-background rounded px-3 py-1.5">
+    <Search className="h-4 w-4 text-muted" />
+    <Input
+      placeholder="Search"
+      className="border-none bg-transparent focus:ring-0 text-sm p-0"
+    />
+  </div>
+  
+  {/* Mobile search - toggle button */}
+  <button
+    onClick={() => setShowSearch(!showSearch)}
+    className="md:hidden p-2 hover:bg-gray-100 rounded-full"
+  >
+    <Search className="h-5 w-5 text-muted" />
+  </button>
+  
+  {/* Mobile search overlay */}
+  {showSearch && (
+    <div className="md:hidden fixed inset-0 bg-white z-50 p-4">
+      <div className="flex items-center gap-2 mb-4">
+        <button onClick={() => setShowSearch(false)}>
+          <X className="h-6 w-6" />
+        </button>
+        <Input
+          autoFocus
+          placeholder="Search"
+          className="pl-9 bg-input border-none h-9 rounded-full transition-all focus:w-[280px]"
+        />
+      </div>
+    </div>
+  )}
+</div>
                 </div>
 
                 {/* Right: Navigation Icons */}
