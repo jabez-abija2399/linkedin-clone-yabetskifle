@@ -12,7 +12,7 @@ import { FollowButton } from "@/components/profile/FollowButton";
 
 // Get user profile data
 async function getUserProfile(userId: string) {
-    const user = await prisma.user.findUnique({
+    const user = (await prisma.user.findUnique({
         where: { id: userId },
         include: {
             posts: {
@@ -34,7 +34,7 @@ async function getUserProfile(userId: string) {
                 },
             },
         },
-    });
+    })) as any;
 
     return user;
 }
@@ -69,8 +69,8 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
 
                 <CardContent className="relative pt-0 pb-6">
                     {/* Avatar */}
-                    <div className="absolute -top-40 left-6">
-                        <div className="h-32 w-32 rounded-full border-4 border-white bg-gray-200 overflow-hidden relative">
+                    <div className="absolute -top-16 left-6">
+                        <div className="h-32 w-32 rounded-full border-4 border-white bg-gray-200 overflow-hidden relative shadow-sm">
                             {user.image ? (
                                 <Image src={user.image} alt={user.name || "User"} fill className="object-cover" />
                             ) : (
@@ -84,7 +84,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                     {/* User Info */}
                     <div className="mt-20 px-6">
                         <h1 className="text-2xl font-bold">{user.name}</h1>
-                        <p className="text-muted text-lg">{user.headline || "LinkedIn User"}</p>
+                        <p className="text-muted text-lg leading-tight">{user.headline || "LinkedIn User"}</p>
 
                         {user.location && (
                             <div className="flex items-center gap-1 text-sm text-muted mt-2">
@@ -94,7 +94,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                         )}
 
                         {user.about && (
-                            <p className="mt-4 text-sm leading-relaxed">{user.about}</p>
+                            <p className="mt-4 text-sm leading-relaxed text-gray-700">{user.about}</p>
                         )}
 
                         {/* Stats */}
@@ -103,24 +103,29 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                                 <span className="font-semibold">{user._count.posts}</span>
                                 <span className="text-muted ml-1">posts</span>
                             </div>
-                            {/* We'll add connections count later */}
+                            <div className="flex items-center">
+                                <span className="font-semibold text-primary">
+                                    {user._count.followers}
+                                </span>
+                                <span className="text-muted ml-1">connections</span>
+                            </div>
                         </div>
 
                         {/* Edit Profile Button - Only show on own profile */}
-                        {isOwnProfile ? (
-                            <div className="mt-4">
+                        <div className="mt-4 flex gap-2">
+                            {isOwnProfile ? (
                                 <EditProfileModal
                                     currentHeadline={user.headline}
                                     currentAbout={user.about}
                                     currentLocation={user.location}
                                 />
-                            </div>
-                        ): (
-                            <FollowButton
-                                targetUserId={user.id}
-                                initialIsFollowing={followingStatus}
-                            />
-                        )}
+                            ) : (
+                                <FollowButton
+                                    targetUserId={user.id}
+                                    initialIsFollowing={followingStatus}
+                                />
+                            )}
+                        </div>
 
                     </div>
                 </CardContent>
@@ -137,7 +142,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                         <p className="text-center text-muted py-8">No posts yet</p>
                     ) : (
                         <div className="space-y-4">
-                            {user.posts.map((post) => (
+                            {user.posts.map((post: any) => (
                                 <PostCard
                                     key={post.id}
                                     postId={post.id}
@@ -146,7 +151,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                                     authorHeadline={post.author.headline || ""}
                                     content={post.content || ""}
                                     image={post.image}
-                                    initialLike={post.likes.some(like => like.userId === session?.user?.id)}
+                                    initialLike={post.likes.some((like: any) => like.userId === session?.user?.id)}
                                     //   initialLike={post.likes.some(like => like.userId === session.user.id)}
                                     comments={post.comments}
                                     createdAt={formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
