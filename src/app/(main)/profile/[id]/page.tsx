@@ -33,7 +33,7 @@ async function getUserProfile(userId: string) {
                     following: true,
                 },
             },
-        },
+        } as any,
     })) as any;
 
     return user;
@@ -122,6 +122,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                             ) : (
                                 <FollowButton
                                     targetUserId={user.id}
+                                    targetUserName={user.name || "this user"}
                                     initialIsFollowing={followingStatus}
                                 />
                             )}
