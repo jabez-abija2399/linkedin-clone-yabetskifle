@@ -4,15 +4,18 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 
-export async function CreateComment(content: string, postId: string) {
+export async function CreateComment(formData: FormData) {
     const session = await auth()
     const userId = session?.user?.id
-    
+
     if (!userId) {
         return { error: "Unauthorized" }
     }
 
-    if(!content || !postId) {
+    const content = formData.get("content") as string;
+    const postId = formData.get("postId") as string;
+
+    if (!content || !postId) {
         return { error: "Invalid comment data" }
     }
 
@@ -24,10 +27,11 @@ export async function CreateComment(content: string, postId: string) {
                 content,
             }
         })
+
+        revalidatePath("/");
+        return { success: true };
     } catch (error) {
         console.error("Error creating comment:", error);
         return { error: "Failed to create comment" };
     }
-
-    revalidatePath("/")
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useOptimistic, useState, useTransition } from "react"
 import { ActionButtons } from "./PostActions"
 import { ThumbsUp, MessageCircle, Repeat2, Send } from "lucide-react"
 import { CreateComment } from "@/server/actions/comment.actions";
@@ -16,13 +16,38 @@ export function PostInteraction({
 }) {
     const [commentText, setCommentText] = useState("")
     const [showComments, setShowComments] = useState(false);
+    const [isPending, startTransition] = useTransition();
+    const [optimisticComments, addOptimisticComment] = useOptimistic(
+        comments || [],
+        (state, newComment: any) => [...state, newComment]
+    );
 
     const handleCommentSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!commentText.trim()) return
 
-        await CreateComment(commentText, postId)
-        setCommentText("")
+        const tempComment = {
+            id: "temp-" + Date.now(),
+            content: commentText,
+            createdAt: new Date(),
+            author: {
+                name: "You",
+                headline: "",
+            },
+        };
+
+        const formData = new FormData();
+        formData.append("content", commentText);
+        formData.append("postId", postId);
+
+        setCommentText("");
+
+        // Wrap optimistic update in transition
+        startTransition(() => {
+            addOptimisticComment(tempComment);
+        });
+
+        await CreateComment(formData);
     }
 
     return (
@@ -73,7 +98,7 @@ export function PostInteraction({
 
                     {/* Mapping real comments */}
                     <div className="space-y-4 pt-2">
-                        {comments?.map((comment) => (
+                        {optimisticComments.map((comment) => (
                             <div key={comment.id} className="flex gap-2 items-start">
                                 <div className="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0" />
                                 <div className="bg-gray-100 rounded-lg rounded-tl-none p-3 flex-1">
