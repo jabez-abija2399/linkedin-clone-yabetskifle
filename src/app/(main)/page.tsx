@@ -120,7 +120,7 @@ export default async function Home() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
          {/* left column (3/12 width) */}
          <div className="md:col-span-3">
-            <Sidebar user={user}/>
+            <Sidebar user={user} />
          </div>
 
          {/* Middle colume (6/12 width) */}
@@ -137,22 +137,33 @@ export default async function Home() {
             }
 
             {/*  map through MOCK_Posts */}
-            {posts.map((post: Post) => (
-               <PostCard
-                  postId={post.id}
-                  key={post.id}
-                  authorId={post.author.id} 
-                  authorName={post.author.name || "Anonymous"}
-                  authorHeadline={post.author.headline || ""}
-                  content={post.content || ""}
-                  initialLike={post.likes.some(like => like.userId === myUserId)}
-                  comments={post.comments}
-                  image={post?.image}
-                  // For now, let's just turn the date into a string. 
-                  // Later we can use 'date-fns' to make it say "2h ago"
-                  createdAt={formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
-               />
-            ))}
+            {posts.length === 0 ? (
+               <Card className="p-12 text-center">
+                  <div className="space-y-3">
+                     <div className="text-4xl">📝</div>
+                     <h3 className="text-lg font-semibold">No posts yet</h3>
+                     <p className="text-muted text-sm">
+                        Be the first to share something!
+                     </p>
+                  </div>
+               </Card>
+            ) : (
+               posts.map((post: Post) => (
+                  <PostCard
+                     postId={post.id}
+                     key={post.id}
+                     authorId={post.author.id}
+                     authorName={post.author.name || "Anonymous"}
+                     authorHeadline={post.author.headline || ""}
+                     content={post.content || ""}
+                     initialLike={post.likes.some(like => like.userId === myUserId)}
+                     comments={post.comments}
+                     image={post?.image}
+                     // For now, let's just turn the date into a string. 
+                     // Later we can use 'date-fns' to make it say "2h ago"
+                     createdAt={formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+                  />
+               )))}
          </div>
 
          {/* right column (3/12 width) */}
