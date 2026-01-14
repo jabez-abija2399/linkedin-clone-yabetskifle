@@ -7,6 +7,8 @@ import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import { MapPin, Briefcase, Calendar } from "lucide-react";
 import { EditProfileModal } from "../EditProfileModel";
+import { isFollowing } from "@/server/actions/connection.actions";
+import { FollowButton } from "@/components/profile/FollowButton";
 
 // Get user profile data
 async function getUserProfile(userId: string) {
@@ -27,7 +29,8 @@ async function getUserProfile(userId: string) {
             _count: {
                 select: {
                     posts: true,
-                    // We'll add connections later
+                    followers: true,
+                    following: true,
                 },
             },
         },
@@ -51,6 +54,11 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     }
 
     const isOwnProfile = session.user.id === id;
+
+    // 3. Fetch the follow status if it's someone else's profile
+    // This tells the FollowButton whether to show "Follow" or "Unfollow"
+    const followingStatus = isOwnProfile ? false : await isFollowing(id);
+
 
     return (
         <div className="max-w-4xl mx-auto space-y-4">
@@ -99,7 +107,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                         </div>
 
                         {/* Edit Profile Button - Only show on own profile */}
-                        {isOwnProfile && (
+                        {isOwnProfile ? (
                             <div className="mt-4">
                                 <EditProfileModal
                                     currentHeadline={user.headline}
@@ -107,6 +115,11 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                                     currentLocation={user.location}
                                 />
                             </div>
+                        ): (
+                            <FollowButton
+                                targetUserId={user.id}
+                                initialIsFollowing={followingStatus}
+                            />
                         )}
 
                     </div>
