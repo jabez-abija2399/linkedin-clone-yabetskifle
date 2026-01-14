@@ -7,6 +7,7 @@ import { Image as ImageIcon, Video, Calendar, Newspaper, X } from "lucide-react"
 import { Modal } from "@/components/ui/Modal";
 import { createPost } from "@/server/actions/post.actions";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export function PostForm() {
   // STATE MANAGEMENT
@@ -49,11 +50,12 @@ export function PostForm() {
     }
     const result = await createPost(formData);
     if (result.success) {
+      toast.success("Post created successfully");
       setIsOpen(false);
       setSelectedImage(null); // Reset everything
       setImageFile(null);
     } else {
-      alert(result.error);
+      toast.error(result.error);
     }
   }
 
