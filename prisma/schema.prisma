@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Connection {
+model Follow {
   id          String   @id @default(cuid())
   followerId  String   // The person who follows
   followingId String   // The person being followed
@@ -41,8 +41,8 @@ model User {
   comments      Comment[]
   likes         Like[]
 
-  followers     Connection[] @relation("Following")
-  following     Connection[] @relation("Follower")
+  followers     Follow[] @relation("Following")
+  following     Follow[] @relation("Follower")
 }
 
 model Account {
