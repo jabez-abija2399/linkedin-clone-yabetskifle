@@ -46,6 +46,7 @@ model User {
   following     Follow[] @relation("Follower")
   notifications Notification[] @relation("UserNotifications")
   createdNotifications Notification[] @relation("NotificationCreator")
+  experience Experience[]
 }
 
 model Account {
@@ -143,4 +144,20 @@ model Notification {
   comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
   @@index([userId, createdAt])
+}
+
+model Experience {
+  id          String   @id @default(cuid())
+  title       String   // e.g. "Software Engineer"
+  company     String   // e.g. "Google"
+  location    String?
+  startDate   DateTime
+  endDate     DateTime? // Null means "Present"
+  description String?
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
