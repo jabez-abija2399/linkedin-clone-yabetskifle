@@ -5,13 +5,14 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { PostCard } from "@/components/post/PostCard";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
-import { MapPin, Briefcase, Calendar } from "lucide-react";
+import { MapPin, Briefcase, Calendar, GraduationCap } from "lucide-react";
 import { EditProfileModal } from "../EditProfileModel";
 import { isFollowing } from "@/server/actions/connection.actions";
 import { FollowButton } from "@/components/profile/FollowButton";
 import { ProfileEditor } from "@/components/profile/ProfileEditor";
 import { format } from "date-fns";
 import { AddExperienceButton } from "@/components/profile/AddExperienceButton";
+import { EducationForm } from "@/components/profile/EducationForm";
 
 // Get user profile data
 async function getUserProfile(userId: string) {
@@ -38,7 +39,10 @@ async function getUserProfile(userId: string) {
             },
             experience: {
                 orderBy: { startDate: 'desc' },
-            }
+            },
+            education: {
+                orderBy: { startDate: 'desc' },
+            },
         } as any,
     })) as any;
 
@@ -102,11 +106,11 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                         {user.about && (
                             <p className="mt-4 text-sm leading-relaxed text-gray-700">{user.about}</p>
                         )}
-                        <div className="mt-6 px-6 border-t pt-6">
+                        <div className="mt-6 px-6 border-t border-border pt-6">
                             {/* HEADER ROW with Title + Button */}
                             <div className="flex items-center justify-between mb-4">
                                 <h2 className="text-xl font-bold">Experience</h2>
-                                {isOwnProfile && <AddExperienceButton />}
+                                {isOwnProfile && <AddExperienceButton isExperienceOpen />}
                             </div>
 
                             {user.experience.length === 0 ? (
@@ -128,6 +132,37 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                                                     {job.endDate ? format(new Date(job.endDate), "MMM yyyy") : "Present"}
                                                 </p>
                                                 {job.description && <p className="text-sm mt-2">{job.description}</p>}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* EDUCATION SECTION */}
+                        <div className="mt-6 px-6 border-t border-border pt-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-xl font-bold">Education</h2>
+                                {isOwnProfile && <AddExperienceButton isEducationOpen />}
+                            </div>
+
+                            {user.education.length === 0 ? (
+                                <p className="text-muted text-sm">No education listed.</p>
+                            ) : (
+                                <div className="space-y-6">
+                                    {user.education.map((edu: any) => (
+                                        <div key={edu.id} className="flex gap-4">
+                                            <div className="h-12 w-12 bg-gray-100 rounded flex items-center justify-center flex-shrink-0">
+                                                {/* Import GraduationCap from lucide-react */}
+                                                <GraduationCap className="h-6 w-6 text-gray-500" />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-semibold">{edu.school}</h3>
+                                                <p className="text-sm">{edu.degree} {edu.fieldOfStudy ? `in ${edu.fieldOfStudy}` : ''}</p>
+                                                <p className="text-xs text-muted">
+                                                    {format(new Date(edu.startDate), "yyyy")} -
+                                                    {edu.endDate ? format(new Date(edu.endDate), "yyyy") : "Present"}
+                                                </p>
                                             </div>
                                         </div>
                                     ))}
