@@ -47,6 +47,7 @@ model User {
   notifications Notification[] @relation("UserNotifications")
   createdNotifications Notification[] @relation("NotificationCreator")
   experience Experience[]
+  education  Education[]
 }
 
 model Account {
@@ -160,4 +161,18 @@ model Experience {
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Education {
+  id           String    @id @default(cuid())
+  school       String    // e.g. "Harvard University"
+  degree       String?   // e.g. "Bachelors"
+  fieldOfStudy String?   // e.g. "Computer Science"
+  startDate    DateTime
+  endDate      DateTime? // Null means "Present" or "Indefinite"
+  description  String?   // Activities and societies, grades, etc.
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
