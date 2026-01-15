@@ -19,7 +19,7 @@ export async function toggleLike(postId: string) {
             },
         },
     });
-    
+
     if (like) {
         await prisma.like.delete({
             where: {
@@ -36,7 +36,24 @@ export async function toggleLike(postId: string) {
                 postId,
             },
         });
+
+        const post = await prisma.post.findUnique({
+            where: {
+                id: postId,
+            },
+        });
+
+        if (post && post.authorId !== userId) {
+            await prisma.notification.create({
+                data: {
+                    userId: post.authorId,
+                    creatorId: userId,
+                    type: "LIKE",   
+                    postId: postId,
+                },
+            });
+        }
     }
-    
+
     revalidatePath("/")
 }
