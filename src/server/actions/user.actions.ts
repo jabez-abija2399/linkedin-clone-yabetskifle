@@ -13,11 +13,13 @@ export async function updateProfile(formData: FormData) {
     }
 
     // Extract data and convert empty strings to null
+    const name = formData.get("name") as string;
     const headline = formData.get("headline") as string;
     const about = formData.get("about") as string;
     const location = formData.get("location") as string;
 
     const data = {
+        name: name?.trim() || null,
         headline: headline?.trim() || null,
         about: about?.trim() || null,
         location: location?.trim() || null,
