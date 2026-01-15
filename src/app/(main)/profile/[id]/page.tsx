@@ -11,6 +11,7 @@ import { isFollowing } from "@/server/actions/connection.actions";
 import { FollowButton } from "@/components/profile/FollowButton";
 import { ProfileEditor } from "@/components/profile/ProfileEditor";
 import { format } from "date-fns";
+import { AddExperienceButton } from "@/components/profile/AddExperienceButton";
 
 // Get user profile data
 async function getUserProfile(userId: string) {
@@ -102,22 +103,27 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                             <p className="mt-4 text-sm leading-relaxed text-gray-700">{user.about}</p>
                         )}
                         <div className="mt-6 px-6 border-t pt-6">
-                            <h2 className="text-xl font-bold mb-4">Experience</h2>
+                            {/* HEADER ROW with Title + Button */}
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-xl font-bold">Experience</h2>
+                                {isOwnProfile && <AddExperienceButton />}
+                            </div>
+
                             {user.experience.length === 0 ? (
                                 <p className="text-muted text-sm">No experience listed.</p>
                             ) : (
                                 <div className="space-y-6">
-                                    {user.experience.map((job) => (
+                                    {user.experience.map((job: any) => (
                                         <div key={job.id} className="flex gap-4">
                                             {/* Company Logo Placeholder */}
-                                            <div className="h-12 w-12 bg-gray-100 rounded flex items-center justify-center">
+                                            <div className="h-12 w-12 bg-gray-100 rounded flex items-center justify-center flex-shrink-0">
                                                 <Briefcase className="h-6 w-6 text-gray-500" />
                                             </div>
                                             <div>
                                                 <h3 className="font-semibold">{job.title}</h3>
                                                 <p className="text-sm">{job.company}</p>
                                                 <p className="text-xs text-muted flex items-center gap-1">
-                                                    {/* You'll need `date-fns` format here */}
+                                                    <Calendar className="h-3 w-3" />
                                                     {format(new Date(job.startDate), "MMM yyyy")} -
                                                     {job.endDate ? format(new Date(job.endDate), "MMM yyyy") : "Present"}
                                                 </p>
