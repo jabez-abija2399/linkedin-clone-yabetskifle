@@ -9,6 +9,7 @@ import { Card, CardContent } from "../ui/Card";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 import Button from "../ui/Button";
+import { SearchInput } from "../SearchInput";
 
 interface NavbarClientProps {
     user: any;
@@ -45,11 +46,7 @@ export function NavbarClient({ user, unreadCount }: NavbarClientProps) {
                     <div className="flex-1 max-w-md mx-4 relative">
                         {/* Desktop search - always visible */}
                         <div className="hidden md:flex items-center gap-2 bg-background rounded px-3 py-1.5">
-                            <Search className="h-4 w-4 text-muted" />
-                            <Input
-                                placeholder="Search"
-                                className="border-none bg-transparent focus:ring-0 text-sm p-0"
-                            />
+                            <SearchInput />
                         </div>
 
                         {/* Mobile search - toggle button */}
@@ -67,11 +64,7 @@ export function NavbarClient({ user, unreadCount }: NavbarClientProps) {
                                     <button onClick={() => setShowSearch(false)}>
                                         <X className="h-6 w-6" />
                                     </button>
-                                    <Input
-                                        autoFocus
-                                        placeholder="Search"
-                                        className="pl-9 bg-input border-none h-9 rounded-full transition-all focus:w-[280px]"
-                                    />
+                                    <SearchInput />
                                 </div>
                             </div>
                         )}
