@@ -40,6 +40,8 @@ export async function createPost(formData: FormData) {
             },
         });
 
+
+
         revalidatePath("/");
         return { success: true };
     } catch (error) {
@@ -54,7 +56,7 @@ export async function getPosts() {
             orderBy: { createdAt: "desc" },
             include: {
                 author: true, // This brings in the name, image, and headline!
-                likes: true, 
+                likes: true,
                 comments: {
                     include: {
                         author: true,
