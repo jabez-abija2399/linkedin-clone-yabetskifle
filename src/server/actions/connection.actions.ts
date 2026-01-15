@@ -45,6 +45,16 @@ export async function toggleFollow(targetUserId: string) {
                 },
             });
 
+            if (targetUserId !== session.user.id) {
+                await prisma.notification.create({
+                    data: {
+                        userId: targetUserId,      // Recipient
+                        creatorId: session.user.id, // You
+                        type: "FOLLOW",
+                    }
+                });
+            }
+
             revalidatePath(`/profile/${targetUserId}`);
             return { success: true, action: "followed" };
         }
