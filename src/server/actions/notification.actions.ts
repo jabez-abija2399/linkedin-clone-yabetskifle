@@ -35,3 +35,17 @@ export async function markAsRead(notificationId: string) {
         data: { read: true }
     });
 }
+
+export async function getUnreadNotificationCount() {
+    const session = await auth()
+    if (!session?.user?.id) return 0;
+
+    const count = await prisma.notification.count({
+        where: {
+            userId: session.user.id,
+            read: false
+        }
+    });
+
+    return count;
+}
