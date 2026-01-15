@@ -44,6 +44,8 @@ model User {
 
   followers     Follow[] @relation("Following")
   following     Follow[] @relation("Follower")
+  notifications Notification[] @relation("UserNotifications")
+  createdNotifications Notification[] @relation("NotificationCreator")
 }
 
 model Account {
@@ -93,6 +95,7 @@ model Post {
 
   comments  Comment[]
   likes     Like[]
+  notifications Notification[]
 }
 
 model Comment {
@@ -105,6 +108,7 @@ model Comment {
   
   postId    String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  notifications Notification[]
 }
 
 model Like {
@@ -118,4 +122,25 @@ model Like {
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([userId, postId]) // A user can like a post only once
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String   // The person receiving the notification
+  creatorId String   // The person who triggered it (e.g., liked the post)
+  type      String   // "LIKE", "COMMENT", "FOLLOW"
+  read      Boolean  @default(false)
+  
+  postId    String?  // Optional: if it relates to a post
+  commentId String?  // Optional: if it relates to a comment
+
+  createdAt DateTime @default(now())
+
+  // Relations
+  user      User     @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+  creator   User     @relation("NotificationCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
 }
