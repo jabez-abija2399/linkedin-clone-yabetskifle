@@ -112,20 +112,23 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                             </div>
                         </div>
 
-                        {/* Edit Profile Button - Only show on own profile */}
-                        <div className="mt-4 flex gap-2">
-                            {isOwnProfile ? (
-                                <div className="absolute top-4 right-4">
-                                    <ProfileEditor user={user} />
-                                </div>
-                            ) : (
+                        {/* Edit Profile Button (Absolute Positioned) */}
+                        {isOwnProfile && (
+                            <div className="absolute top-4 right-4">
+                                <ProfileEditor user={user} />
+                            </div>
+                        )}
+
+                        {/* Follow Button (In Flow) */}
+                        {!isOwnProfile && (
+                            <div className="mt-4 flex gap-2">
                                 <FollowButton
                                     targetUserId={user.id}
                                     targetUserName={user.name || "this user"}
                                     initialIsFollowing={followingStatus}
                                 />
-                            )}
-                        </div>
+                            </div>
+                        )}
 
                     </div>
                 </CardContent>
