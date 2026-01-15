@@ -9,6 +9,7 @@ import { MapPin, Briefcase, Calendar } from "lucide-react";
 import { EditProfileModal } from "../EditProfileModel";
 import { isFollowing } from "@/server/actions/connection.actions";
 import { FollowButton } from "@/components/profile/FollowButton";
+import { ProfileEditor } from "@/components/profile/ProfileEditor";
 
 // Get user profile data
 async function getUserProfile(userId: string) {
@@ -114,11 +115,9 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                         {/* Edit Profile Button - Only show on own profile */}
                         <div className="mt-4 flex gap-2">
                             {isOwnProfile ? (
-                                <EditProfileModal
-                                    currentHeadline={user.headline}
-                                    currentAbout={user.about}
-                                    currentLocation={user.location}
-                                />
+                                <div className="absolute top-4 right-4">
+                                    <ProfileEditor user={user} />
+                                </div>
                             ) : (
                                 <FollowButton
                                     targetUserId={user.id}
