@@ -1,52 +1,37 @@
-import { getNotifications } from "@/server/actions/notification.actions";
+import { getNotifications, markAsRead } from "@/server/actions/notification.actions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
+import { Heart, MessageSquare, UserPlus } from "lucide-react";
+import Image from "next/image";
+import NotificationItem from "@/components/notifications/NotificationItem";
 
 export default async function NotificationsPage() {
-  const notifications = await getNotifications();
+    const notifications = await getNotifications();
 
-  return (
-    <div className="max-w-2xl mx-auto">
-        <Card>
-            <CardHeader className="border-b">
-                <CardTitle>Notifications</CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-                {notifications.length === 0 ? (
-                    <p className="p-6 text-center text-muted">No notifications yet</p>
-                ) : (
-                    notifications.map((notification) => (
-                        <div key={notification.id} className="flex gap-4 p-4 border-b hover:bg-muted/50 transition-colors">
-                            {/* Avatar */}
-                            <div className="relative h-10 w-10 flex-shrink-0">
-                                <Image
-                                    src={notification.creator.image || "/placeholder.png"}
-                                    alt={notification.creator.name || "User"}
-                                    fill
-                                    className="rounded-full object-cover"
-                                />
+    return (
+        <div className="max-w-2xl mx-auto">
+            <Card>
+                <CardHeader className="border-b">
+                    <CardTitle>Notifications</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                    {notifications.length === 0 ? (
+                        <div className="p-8 text-center text-muted">
+                            <div className="flex justify-center mb-4">
+                                <div className="p-3 bg-muted rounded-full">
+                                    <Heart className="h-6 w-6 text-muted-foreground" />
+                                </div>
                             </div>
-                            
-                            {/* Content */}
-                            <div>
-                                <p className="text-sm">
-                                    <span className="font-semibold text-foreground">
-                                        {notification.creator.name}
-                                    </span>{" "}
-                                    {notification.type === "FOLLOW" && "started following you"}
-                                    {notification.type === "LIKE" && "liked your post"}
-                                    {notification.type === "COMMENT" && "commented on your post"}
-                                </p>
-                                <p className="text-xs text-muted mt-1">
-                                    {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}
-                                </p>
-                            </div>
+                            <h3 className="font-semibold text-lg">No notifications yet</h3>
+                            <p className="mt-1 text-sm">When people interact with you, it will show up here.</p>
                         </div>
-                    ))
-                )}
-            </CardContent>
-        </Card>
-    </div>
-  );
+                    ) : (
+                        notifications.map((notification) => (
+                            <NotificationItem key={notification.id} notification={notification} />
+                        ))
+                    )}
+                </CardContent>
+            </Card>
+        </div>
+    );
 }
