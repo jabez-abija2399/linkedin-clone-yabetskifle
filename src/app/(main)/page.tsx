@@ -117,7 +117,7 @@ export default async function Home() {
 
 
    return (
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-12 max-w-7xl mx-auto px-4 py-6">
          {/* left column (3/12 width) */}
          <div className="md:col-span-3">
             <Sidebar user={user} />
