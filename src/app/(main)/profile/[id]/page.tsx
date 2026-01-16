@@ -16,7 +16,7 @@ import { EducationForm } from "@/components/profile/EducationForm";
 import { MessageButton } from "@/components/profile/MessageButton";
 
 // Get user profile data
-async function getUserProfile(userId: string) {
+export async function getUserProfile(userId: string) {
     const user = (await prisma.user.findUnique({
         where: { id: userId },
         include: {
@@ -46,7 +46,7 @@ async function getUserProfile(userId: string) {
             },
         } as any,
     })) as any;
-
+    console.log("profile user",user);
     return user;
 }
 
@@ -76,7 +76,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
             {/* Profile Header Card */}
             <Card className="overflow-hidden">
                 {/* Banner */}
-                <div className="h-32 bg-gradient-to-r from-primary to-blue-400" />
+                <div className="h-32 bg-linear-to-r from-primary to-blue-400" />
 
                 <CardContent className="relative pt-0 pb-6">
                     {/* Avatar */}
