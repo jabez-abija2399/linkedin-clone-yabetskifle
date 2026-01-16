@@ -1,16 +1,39 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { MoreHorizontal, Edit, Search } from "lucide-react";
 import { ConversationItem } from "./ConversationItem";
+import { getUserConversations } from "@/server/actions/message.actions";
 
 interface MessagingSidebarProps {
-    conversations: any[];
+    conversations: any[]; // Initial data
     activeConversationId?: string;
-    currentUserId: string | undefined;
+    currentUserId: string;
 }
 
-export function MessagingSidebar({ conversations, activeConversationId, currentUserId }: MessagingSidebarProps) {
+export function MessagingSidebar({ conversations: initialConversations, activeConversationId, currentUserId }: MessagingSidebarProps) {
+    const [conversations, setConversations] = useState(initialConversations);
+
+    // Sync if initial props change
+    useEffect(() => {
+        setConversations(initialConversations);
+    }, [initialConversations]);
+
+    // Polling for Sidebar
+    useEffect(() => {
+        const intervalId = setInterval(async () => {
+            const latest = await getUserConversations();
+            if (latest) {
+                setConversations(latest);
+            }
+        }, 5000); // Check every 5 seconds for new chats
+
+        return () => clearInterval(intervalId);
+    }, []);
+
+
     return (
         <div className="w-[350px] border-r border-gray-200 flex flex-col h-full bg-white">
-            {/* Header */}
             <div className="p-3 border-b border-gray-200 flex justify-between items-center bg-white sticky top-0 z-10">
                 <h1 className="font-semibold text-sm">Messaging</h1>
                 <div className="flex gap-4 text-gray-600">
@@ -19,7 +42,6 @@ export function MessagingSidebar({ conversations, activeConversationId, currentU
                 </div>
             </div>
 
-            {/* Search */}
             <div className="p-3">
                 <div className="relative">
                     <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
@@ -31,7 +53,6 @@ export function MessagingSidebar({ conversations, activeConversationId, currentU
                 </div>
             </div>
 
-            {/* List */}
             <div className="flex-1 overflow-y-auto">
                 {conversations.length === 0 ? (
                     <p className="p-4 text-center text-gray-500 text-sm">No conversations yet.</p>
