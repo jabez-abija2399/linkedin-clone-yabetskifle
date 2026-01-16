@@ -2,12 +2,12 @@
 
 import { format } from "date-fns";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation"; 
 
 
 interface ConversationItemProps {
     conversation: any;
-    currentUserId: string;
+    currentUserId: string | undefined;
     isActive: boolean;
 }
 
@@ -16,7 +16,7 @@ export const ConversationItem = ({conversation, currentUserId, isActive}: Conver
 
     // find the otheruser
     const otheruser = conversation.users.find((u:any) => u.id !== currentUserId);
-    const lastMessage = conversation.messages.at[0];
+    const lastMessage = conversation.messages && conversation.message[0];
     return (
        <div>
         <div>
