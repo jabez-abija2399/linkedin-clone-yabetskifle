@@ -3,13 +3,12 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
-import { includes } from "zod"
 
 
 // start a new conversation or get existing one
-export async function getOrCreateConversation(otherUserId:string) {
+export async function getOrCreateConversation(otherUserId: string) {
     const session = await auth()
-    if(!session?.user){
+    if (!session?.user) {
         throw new Error("Unauthorized")
     }
 
@@ -19,30 +18,30 @@ export async function getOrCreateConversation(otherUserId:string) {
         const existingConversation = await prisma.conversation.findFirst({
             where: {
                 AND: [
-                    {users: {some: {id:session.user.id}}},
-                    {users: {some: {id:otherUserId}}}
+                    { users: { some: { id: session.user.id } } },
+                    { users: { some: { id: otherUserId } } }
                 ],
             },
             include: {
-                messages:{
-                    orderBy: {createdAt: "asc"},
-                    include: {sender: true}
+                messages: {
+                    orderBy: { createdAt: "asc" },
+                    include: { sender: true }
                 },
                 users: true
             }
         });
 
-        if(existingConversation) {
-            return {conversation: existingConversation}
+        if (existingConversation) {
+            return { conversation: existingConversation }
         }
 
         // if not found, create a new one
         const newConversation = await prisma.conversation.create({
             data: {
                 users: {
-                    connect:[
-                        {id: session.user.id},
-                        {id: otherUserId}
+                    connect: [
+                        { id: session.user.id },
+                        { id: otherUserId }
                     ]
                 }
             },
@@ -52,18 +51,18 @@ export async function getOrCreateConversation(otherUserId:string) {
             },
         });
 
-        return {conversation: newConversation}
+        return { conversation: newConversation }
 
-        
+
     } catch (error) {
-        return {error: "Failed to create conversation"};
+        return { error: "Failed to create conversation" };
     }
 }
 
 // send a message
-export async function sendMessage(conversationId:string, content:string) {
+export async function sendMessage(conversationId: string, content: string) {
     const session = await auth()
-    if(!session?.user){
+    if (!session?.user) {
         throw new Error("Unauthorized")
     }
 
@@ -78,37 +77,37 @@ export async function sendMessage(conversationId:string, content:string) {
 
         // update conversation timestamp so it move to top of list 
         await prisma.conversation.update({
-            where: {id: conversationId},
-            data: {updatedAt: new Date()}
+            where: { id: conversationId },
+            data: { updatedAt: new Date() }
         })
 
         revalidatePath("/messaging")
-        return {return: true,message}
+        return { return: true, message }
     } catch (error) {
-        return {error: "Failed to send message"}
+        return { error: "Failed to send message" }
     }
 }
 
 // Get all conversations for the current user (for the Sidebar)
-export async function getUserConversations() {
+export async function getConversationById(conversationId: string) {
     const session = await auth();
-    if (!session?.user) return [];
+    if (!session?.user) return { error: "Unauthorized" };
     try {
-        const conversations = await prisma.conversation.findMany({
-            where: {
-                users: { some: { id: session.user.id } },
-            },
+        const conversation = await prisma.conversation.findUnique({
+            where: { id: conversationId },
             include: {
-                users: true, // we need this to show name/avatar of the other person
                 messages: {
-                    take: 1, // just get the last message for preview
-                    orderBy: { createdAt: "desc" },
+                    orderBy: { createdAt: "asc" },
+                    include: { sender: true },
                 },
+                users: true,
             },
-            orderBy: { updatedAt: "desc" },
         });
-        return conversations;
+        // Security check
+        const isParticipant = conversation?.users.some((u: any) => u.id === session?.user?.id );
+        if (!conversation || !isParticipant) return { error: "Access denied" };
+        return { conversation };
     } catch (error) {
-        return [];
+        return { error: "Failed to fetch conversation" };
     }
 }
