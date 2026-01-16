@@ -20,7 +20,7 @@ export const ConversationItem = ({ conversation, currentUserId, isActive }: Conv
     return (
         <div
             onClick={() => router.push(`/messaging?id=${conversation.id}`)}
-            className={`flex items-start gap-3 p-4 cursor-pointer hover:bg-gray-100 border-l-[4px] border-transparent transition-colors ${isActive ? "border-green-700 bg-[#EDF3F8]" : ""
+            className={`flex items-start gap-3 p-4 cursor-pointer hover:bg-gray-100 border-l-[6px] border-transparent transition-colors ${isActive ? "!border-[#01754f] bg-[#EDF3F8]" : ""
                 }`}
         >
             {/* Avatar */}
