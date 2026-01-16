@@ -1,4 +1,4 @@
-"user server"
+"use server";
 
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
@@ -88,7 +88,31 @@ export async function sendMessage(conversationId: string, content: string) {
     }
 }
 
-// Get all conversations for the current user (for the Sidebar)
+// 3. Get all conversations for the current user (for the Sidebar)
+export async function getUserConversations() {
+    const session = await auth();
+    if (!session?.user) return [];
+    try {
+        const conversations = await prisma.conversation.findMany({
+            where: {
+                users: { some: { id: session.user.id } },
+            },
+            include: {
+                users: true, // we need this to show name/avatar of the other person
+                messages: {
+                    take: 1, // just get the last message for preview
+                    orderBy: { createdAt: "desc" },
+                },
+            },
+            orderBy: { updatedAt: "desc" },
+        });
+        return conversations;
+    } catch (error) {
+        return [];
+    }
+}
+
+// Get conversation by ID (for the ChatWindow)
 export async function getConversationById(conversationId: string) {
     const session = await auth();
     if (!session?.user) return { error: "Unauthorized" };
