@@ -9,6 +9,7 @@ import { getPosts } from "@/server/actions/post.actions";
 import { formatDistanceToNow } from "date-fns";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { getUserProfile } from "./profile/[id]/page";
 
 interface Post {
    id: string;
@@ -47,12 +48,14 @@ export default async function Home() {
    }
    const myUserId = session.user.id;
 
+   const userDetails = await getUserProfile(myUserId);
+
 
    return (
       <div className="grid grid-cols-1 gap-6 md:grid-cols-14 max-w-[1160px] mx-auto px-4 py-6">
          {/* left column (3/12 width) */}
          <div className="md:col-span-3">
-            <Sidebar user={user} />
+            <Sidebar user={userDetails} />
          </div>
 
          {/* Middle colume (6/12 width) */}
