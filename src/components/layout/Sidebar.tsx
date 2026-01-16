@@ -12,13 +12,14 @@ import Image from "next/image";
 // }
 
 export function Sidebar({ user }: { user?: any }) {
+
   return (
     <aside className="w-full space-y-2">
       <Card className="overflow-hidden">
         {/* Banner Area */}
-        <div className="h-14 bg-primary/20 bg-gradient-to-r from-primary to-blue-400" />
+        <div className="h-14 bg-primary/20 bg-linear-to-r from-primary to-blue-400" />
 
-        <CardContent className="relative flex flex-col items-center p-4">
+        <CardContent className="relative flex flex-col items-left p-4">
           {/* Avatar - Positioned to overlap the banner */}
           <div className="absolute -top-10 h-20 w-20 rounded-full border-2 border-white bg-surface p-0.5 overflow-hidden">
             <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300 relative overflow-hidden">
@@ -35,13 +36,27 @@ export function Sidebar({ user }: { user?: any }) {
             </div>
           </div>
 
-          <div className="mt-8 text-center">
-            <h3 className="text-lg font-semibold hover:underline cursor-pointer">{user?.name}</h3>
-            <p className="text-xs text-muted">{user?.headline}</p>
+          <div className="mt-8 ">
+            <h3 className="text-lg font-bold hover:underline cursor-pointer">{user?.name}</h3>
+            <p className="text-xs text-black">{user?.headline}</p>
+            <p className="text-xs text-muted">{user?.location}</p>
           </div>
 
-          <hr className="my-4 w-full border-border" />
+          {/* user Exprience */}
+            <div className="mt-2 space-y-2 font-semibold text-lg">
+              {user?.experience?.map((exp: any) => (
+                <p key={exp.id} className="hover:bg-gray-100 p-1 rounded cursor-pointer">
+                 {exp.company}
+                </p>
+              ))}
+            </div>
+          {/* <hr className="my-4 w-full border-border" /> */}
 
+        </CardContent>
+      </Card>
+
+       <Card className="p-3">
+        
           {/* Stats Section */}
           <div className="w-full space-y-1">
             <div className="flex justify-between text-xs">
@@ -53,7 +68,6 @@ export function Sidebar({ user }: { user?: any }) {
               <span className="text-primary font-semibold">892</span>
             </div>
           </div>
-        </CardContent>
       </Card>
 
       {/* Bottom Sidebar Item (Sticky or Static) */}
