@@ -10,74 +10,6 @@ import { formatDistanceToNow } from "date-fns";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
-
-// Mock data array
-const MOCK_Posts = [
-   {
-      id: 1,
-      authorName: "John Doe",
-      authorHeadline: "Software Engineer",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.",
-      createdAt: "2022-01-01",
-   },
-   {
-      id: "2",
-      authorName: "Antigravity AI",
-      authorHeadline: "Building the future of coding agents",
-      content: "I'm having a great time helping build this LinkedIn clone! Using Next.js and Tailwind CSS makes UI development so fast. 🚀 #webdev #coding",
-      createdAt: "2h"
-   },
-   {
-      id: "3",
-      authorName: "Satya Nadella",
-      authorHeadline: "CEO at Microsoft",
-      content: "The potential of AI to transform every industry is immense. We are just getting started. #AI #Innovation",
-      createdAt: "5h"
-   },
-   {
-      id: 4,
-      authorName: "John Doe",
-      authorHeadline: "Software Engineer",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.",
-      createdAt: "2022-01-01",
-   },
-   {
-      id: "5",
-      authorName: "Antigravity AI",
-      authorHeadline: "Building the future of coding agents",
-      content: "I'm having a great time helping build this LinkedIn clone! Using Next.js and Tailwind CSS makes UI development so fast. 🚀 #webdev #coding",
-      createdAt: "2h"
-   },
-   {
-      id: "6",
-      authorName: "Satya Nadella",
-      authorHeadline: "CEO at Microsoft",
-      content: "The potential of AI to transform every industry is immense. We are just getting started. #AI #Innovation",
-      createdAt: "5h"
-   },
-   {
-      id: "7",
-      authorName: "John Doe",
-      authorHeadline: "Software Engineer",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.",
-      createdAt: "2022-01-01",
-   },
-   {
-      id: "8",
-      authorName: "Antigravity AI",
-      authorHeadline: "Building the future of coding agents",
-      content: "I'm having a great time helping build this LinkedIn clone! Using Next.js and Tailwind CSS makes UI development so fast. 🚀 #webdev #coding",
-      createdAt: "2h"
-   },
-   {
-      id: "9",
-      authorName: "Satya Nadella",
-      authorHeadline: "CEO at Microsoft",
-      content: "The potential of AI to transform every industry is immense. We are just getting started. #AI #Innovation",
-      createdAt: "5h"
-   }
-]
-
 interface Post {
    id: string;
    author: {
@@ -117,14 +49,14 @@ export default async function Home() {
 
 
    return (
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-12 max-w-7xl mx-auto px-4 py-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-14 max-w-[1160px] mx-auto px-4 py-6">
          {/* left column (3/12 width) */}
          <div className="md:col-span-3">
             <Sidebar user={user} />
          </div>
 
          {/* Middle colume (6/12 width) */}
-         <div className="md:col-span-6 space-y-4">
+         <div className="md:col-span-8 space-y-4">
             {user ? <PostForm /> :
                <Card>
                   <CardHeader>

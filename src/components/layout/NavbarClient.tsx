@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Briefcase, Users, MessageSquare, Bell, Search, X } from "lucide-react";
-import { Input } from "../ui/Input";
+import { FaBell,FaSearch } from "react-icons/fa";
+import { RiMessage3Fill } from "react-icons/ri";
+import { BsBriefcaseFill } from "react-icons/bs";
+import { MdPeopleAlt } from "react-icons/md";
+import { IoHomeSharp } from "react-icons/io5";
 import { useState } from "react";
 import { Card, CardContent } from "../ui/Card";
 import Image from "next/image";
@@ -22,15 +26,14 @@ export function NavbarClient({ user, unreadCount }: NavbarClientProps) {
     const [showSearch, setShowSearch] = useState(false);
 
     return (
-        <nav className="sticky top-0 z-50 border-b border-border bg-surface shadow-sm">
-            <div className="flex h-14 items-center px-4 max-w-5xl mx-auto justify-between">
+        <nav className="sticky top-0 z-50 border-b border-border bg-surface">
+            <div className="flex h-12 items-center px-3 max-w-[1150px] mx-auto mt-1 justify-between">
 
                 {/* Left: Logo and search */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center">
                     <Link
                         href="/"
                         className="
-                            mr-2 
                             flex items-center justify-center
                             bg-primary
                             text-white 
@@ -43,9 +46,9 @@ export function NavbarClient({ user, unreadCount }: NavbarClientProps) {
                         in
                     </Link>
 
-                    <div className="flex-1 max-w-md mx-4 relative">
+                    <div className="flex-1 max-w-md mx-2 relative">
                         {/* Desktop search - always visible */}
-                        <div className="hidden md:flex items-center gap-2 bg-background rounded px-3 py-1.5">
+                        <div className="hidden md:flex items-center gap-2  ">
                             <SearchInput />
                         </div>
 
@@ -54,7 +57,7 @@ export function NavbarClient({ user, unreadCount }: NavbarClientProps) {
                             onClick={() => setShowSearch(!showSearch)}
                             className="md:hidden p-2 hover:bg-gray-100 rounded-full"
                         >
-                            <Search className="h-5 w-5 text-muted" />
+                            <FaSearch className="h-5 w-5 text-muted" />
                         </button>
 
                         {/* Mobile search overlay */}
@@ -75,38 +78,38 @@ export function NavbarClient({ user, unreadCount }: NavbarClientProps) {
                 <ul className="flex h-full items-center gap-6 sm:gap-8">
                     <NavLink
                         href="/"
-                        icon={Home}
+                        icon={IoHomeSharp}
                         label="Home"
                         isActive={pathname === "/"}
                     />
                     <NavLink
                         href="/my-network"
-                        icon={Users}
+                        icon={MdPeopleAlt}
                         label="My Network"
                         isActive={pathname === "/my-network"}
                     />
                     <NavLink
                         href="/jobs"
-                        icon={Briefcase}
+                        icon={BsBriefcaseFill}
                         label="Jobs"
                         isActive={pathname === "/jobs"}
                     />
                     <NavLink
                         href="/messaging"
-                        icon={MessageSquare}
+                        icon={RiMessage3Fill}
                         label="Messaging"
                         isActive={pathname === "/messaging"}
                     />
                     <NavLink
                         href="/notifications"
-                        icon={Bell}
+                        icon={FaBell}
                         label="Notifications"
                         isActive={pathname === "/notifications"}
                         badge={unreadCount > 0 ? unreadCount : undefined}
                     />
 
                     {/* Profile & Me */}
-                    <li className="relative flex flex-col items-center justify-center h-full border-b-[2px] border-transparent cursor-pointer min-w-[50px]">
+                    <li className="relative flex flex-col items-center justify-center h-full border-b-2 border-transparent cursor-pointer min-w-[50px]">
                         <div onClick={() => setMeActive(!meActive)} className="flex flex-col items-center gap-1 text-gray-500 hover:text-black">
                             <div className="h-6 w-6 rounded-full bg-gray-300 overflow-hidden relative">
                                 <Image
@@ -119,7 +122,7 @@ export function NavbarClient({ user, unreadCount }: NavbarClientProps) {
                             <span className="hidden md:block text-[12px]">Me ▼</span>
                         </div>
                         {meActive && (
-                            <Card className="absolute top-[120%] right-0 w-64 shadow-xl border border-border z-[100]">
+                            <Card className="absolute top-[120%] right-0 w-64 shadow-xl border border-border z-100">
                                 <CardContent className="p-0">
                                     <div className="p-4 border-b border-border">
                                         <div className="flex gap-2">
@@ -162,6 +165,8 @@ export function NavbarClient({ user, unreadCount }: NavbarClientProps) {
                             </Card>
                         )}
                     </li>
+                    
+                    {/*  */}
                 </ul>
 
             </div>

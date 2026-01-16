@@ -8,7 +8,7 @@ import { UserPlus, UserMinus } from "lucide-react";
 
 interface FollowButtonProps {
     targetUserId: string;
-    targetUserName: string;
+    targetUserName: string | null;
     initialIsFollowing: boolean;
 }
 

@@ -5,7 +5,7 @@ export default function MainLayout(
     {children}: 
     {children: React.ReactNode}) {
      return (
-        <div className="min-h-screen flex flex-col bg-[#F3F2EF]">
+        <div className="min-h-screen flex flex-col bg-background">
             <Navbar /> {/* Existing Top Bar */}
             
             <main className="flex-1 pb-16 md:pb-0"> 

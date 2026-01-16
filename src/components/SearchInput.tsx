@@ -17,10 +17,10 @@ export function SearchInput() {
 
     return (
         <div className="relative">
-            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-black" />
             <Input 
                 placeholder="Search" 
-                className="pl-8 bg-gray-100 border-none focus:ring-1 w-full md:w-[280px]"
+                className="pl-8 border-border rounded-full focus:border-primary h-8 focus:ring-0 w-full md:w-[310px] "
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleSearch}

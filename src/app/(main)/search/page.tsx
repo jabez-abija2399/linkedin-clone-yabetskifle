@@ -108,7 +108,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                                 {/* The new Follow Button */}
                                 {session?.user?.id !== user.id && (
                                     <FollowButton
-                                        userId={user.id}
+                                        targetUserId={user.id}
                                         initialIsFollowing={user.followers.length > 0} 
                                         targetUserName={user.name}
                                     />
