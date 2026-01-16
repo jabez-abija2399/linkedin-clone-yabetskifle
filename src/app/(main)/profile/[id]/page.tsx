@@ -13,6 +13,7 @@ import { ProfileEditor } from "@/components/profile/ProfileEditor";
 import { format } from "date-fns";
 import { AddExperienceButton } from "@/components/profile/AddExperienceButton";
 import { EducationForm } from "@/components/profile/EducationForm";
+import { MessageButton } from "@/components/profile/MessageButton";
 
 // Get user profile data
 async function getUserProfile(userId: string) {
@@ -199,6 +200,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                                     targetUserName={user.name || "this user"}
                                     initialIsFollowing={followingStatus}
                                 />
+                                <MessageButton userId={user.id} />
                             </div>
                         )}
 
