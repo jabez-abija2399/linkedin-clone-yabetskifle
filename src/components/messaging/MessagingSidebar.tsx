@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MoreHorizontal, Edit, Search } from "lucide-react";
+import { MoreHorizontal, Edit, Search, ListFilter } from "lucide-react";
 import { ConversationItem } from "./ConversationItem";
 import { getUserConversations } from "@/server/actions/message.actions";
 
@@ -43,13 +43,18 @@ export function MessagingSidebar({ conversations: initialConversations, activeCo
             </div>
 
             <div className="p-3">
-                <div className="relative">
-                    <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
-                    <input 
-                        type="text" 
-                        placeholder="Search messages" 
-                        className="w-full bg-[#EEF3F8] pl-10 pr-4 py-2 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                    />
+                <div className="relative flex items-center gap-2">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
+                        <input
+                            type="text"
+                            placeholder="Search messages"
+                            className="w-full bg-[#EEF3F8] pl-10 pr-4 py-2 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-black border border-transparent focus:bg-white transition-all"
+                        />
+                    </div>
+                    <button className="p-2 hover:bg-gray-100 rounded-full text-gray-600">
+                        <ListFilter className="h-5 w-5" />
+                    </button>
                 </div>
             </div>
 
@@ -58,7 +63,7 @@ export function MessagingSidebar({ conversations: initialConversations, activeCo
                     <p className="p-4 text-center text-gray-500 text-sm">No conversations yet.</p>
                 ) : (
                     conversations.map((conv) => (
-                        <ConversationItem 
+                        <ConversationItem
                             key={conv.id}
                             conversation={conv}
                             currentUserId={currentUserId}
