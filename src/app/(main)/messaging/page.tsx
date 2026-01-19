@@ -25,18 +25,18 @@ export default async function MessagingPage({ searchParams }: { searchParams: Pr
     return (
         <div className="max-w-6xl mx-auto pt-4 h-[calc(100vh-100px)]">
             <div className="bg-white rounded-t-lg shadow-sm border border-gray-200 h-full flex overflow-hidden">
-                
+
                 {/* 1. Left Sidebar */}
-                <MessagingSidebar 
-                    conversations={conversations} 
+                <MessagingSidebar
+                    conversations={conversations}
                     activeConversationId={activeConversation?.id}
-                    currentUserId={session.user.id} 
+                    currentUserId={session.user.id!}
                 />
 
                 {/* 2. Right Chat Window */}
-                <ChatWindow 
-                    conversation={activeConversation} 
-                    currentUserId={session.user.id}
+                <ChatWindow
+                    conversation={activeConversation}
+                    currentUserId={session.user.id!}
                 />
             </div>
         </div>

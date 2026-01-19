@@ -16,7 +16,7 @@ export async function addEducation(data: any) {
     };
 
     const validated = educationSchema.safeParse(parsedData);
-    if (!validated.success) return { error: validated.error.errors[0].message };
+    if (!validated.success) return { error: validated.error.issues[0].message };
 
     try {
         await prisma.education.create({

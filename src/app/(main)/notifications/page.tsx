@@ -26,7 +26,7 @@ export default async function NotificationsPage() {
                             <p className="mt-1 text-sm">When people interact with you, it will show up here.</p>
                         </div>
                     ) : (
-                        notifications.map((notification) => (
+                        notifications.map((notification: any) => (
                             <NotificationItem key={notification.id} notification={notification} />
                         ))
                     )}

@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 
 export async function addExperience(data: any) {
     const session = await auth();
-    if (!session?.user) return { error: "Unauthorized" };
+    if (!session?.user?.id) return { error: "Unauthorized" };
 
     // Basic date conversion if coming from simple JSON form
     const parsedData = {
@@ -17,15 +17,14 @@ export async function addExperience(data: any) {
     };
 
     const validated = experienceSchema.safeParse(parsedData);
-    if (!validated.success) return { error: validated.error.errors[0].message };
+    if (!validated.success) return { error: validated.error.issues[0].message };
 
     try {
+        const { current, ...experienceData } = validated.data;
         await prisma.experience.create({
             data: {
-                ...validated.data,
+                ...experienceData,
                 userId: session.user.id,
-                // cleanup 'current' field which isn't in DB
-                current: undefined, 
             }
         });
 
