@@ -60,7 +60,7 @@ export default async function Home() {
 
          {/* Middle colume (6/12 width) */}
          <div className="md:col-span-8 space-y-4">
-            {user ? <PostForm /> :
+            {user ? <PostForm user={userDetails} /> :
                <Card>
                   <CardHeader>
                      <CardTitle>
@@ -71,7 +71,7 @@ export default async function Home() {
 
             }
 
-            {/*  map through MOCK_Posts */}
+            {/*  map through Posts */}
             {posts.length === 0 ? (
                <Card className="p-12 text-center">
                   <div className="space-y-3">

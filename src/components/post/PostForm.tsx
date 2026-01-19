@@ -9,7 +9,7 @@ import { createPost } from "@/server/actions/post.actions";
 import Image from "next/image";
 import { toast } from "sonner";
 
-export function PostForm() {
+export function PostForm({user}: {user: any}) {
   // STATE MANAGEMENT
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -70,7 +70,15 @@ export function PostForm() {
       <Card>
         <CardContent className="p-4">
           <div className="flex gap-3">
-            <div className="h-12 w-12 flex-shrink-0 rounded-full bg-gray-300" />
+            {/* <div className="h-12 w-12 shrink-0 rounded-full bg-gray-300" /> */}
+            {/* user image */}
+            <Image
+              src={user.image}
+              alt={user.name}
+              width={48}
+              height={48}
+              className="h-12 w-12 shrink-0 rounded-full"
+            />
             <Button
               variant="outline"
               onClick={() => setIsOpen(true)}
