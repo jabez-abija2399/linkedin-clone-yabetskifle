@@ -14,41 +14,9 @@ import { format } from "date-fns";
 import { AddExperienceButton } from "@/components/profile/AddExperienceButton";
 import { EducationForm } from "@/components/profile/EducationForm";
 import { MessageButton } from "@/components/profile/MessageButton";
+import { getUserProfile } from "@/lib/user";
 
-// Get user profile data
-export async function getUserProfile(userId: string) {
-    const user = (await prisma.user.findUnique({
-        where: { id: userId },
-        include: {
-            posts: {
-                orderBy: { createdAt: "desc" },
-                include: {
-                    author: true,
-                    likes: true,
-                    comments: {
-                        include: { author: true },
-                        orderBy: { createdAt: "desc" },
-                    },
-                },
-            },
-            _count: {
-                select: {
-                    posts: true,
-                    followers: true,
-                    following: true,
-                },
-            },
-            experience: {
-                orderBy: { startDate: 'desc' },
-            },
-            education: {
-                orderBy: { startDate: 'desc' },
-            },
-        } as any,
-    })) as any;
-    console.log("profile user",user);
-    return user;
-}
+
 
 export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
     const session = await auth();

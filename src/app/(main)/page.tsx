@@ -9,7 +9,7 @@ import { getPosts } from "@/server/actions/post.actions";
 import { formatDistanceToNow } from "date-fns";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { getUserProfile } from "./profile/[id]/page";
+import { getUserProfile } from "@/lib/user";
 
 interface Post {
    id: string;
