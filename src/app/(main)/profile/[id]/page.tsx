@@ -89,7 +89,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                                     {user.experience.map((job: any) => (
                                         <div key={job.id} className="flex gap-4">
                                             {/* Company Logo Placeholder */}
-                                            <div className="h-12 w-12 bg-gray-100 rounded flex items-center justify-center flex-shrink-0">
+                                            <div className="h-12 w-12 bg-gray-100 rounded flex items-center justify-center shrink-0">
                                                 <Briefcase className="h-6 w-6 text-gray-500" />
                                             </div>
                                             <div>
@@ -121,7 +121,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                                 <div className="space-y-6">
                                     {user.education.map((edu: any) => (
                                         <div key={edu.id} className="flex gap-4">
-                                            <div className="h-12 w-12 bg-gray-100 rounded flex items-center justify-center flex-shrink-0">
+                                            <div className="h-12 w-12 bg-gray-100 rounded flex items-center justify-center shrink-0">
                                                 {/* Import GraduationCap from lucide-react */}
                                                 <GraduationCap className="h-6 w-6 text-gray-500" />
                                             </div>
