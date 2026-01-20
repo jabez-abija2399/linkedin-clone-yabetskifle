@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+export const dynamic = "force-dynamic";
 import { getWhoToFollow } from "@/server/actions/network.actions";
 import { FollowButton } from "@/components/profile/FollowButton";
 import Link from "next/link";
@@ -12,21 +13,21 @@ export default async function MyNetworkPage() {
 
     return (
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 pt-4">
-            
+
             {/* Left Sidebar (Manage Network) */}
             <div className="hidden md:block col-span-1">
                 <Card>
                     <CardContent className="p-0">
                         <h3 className="p-4 font-semibold text-gray-600 border-b border-gray-100">Manage my network</h3>
                         <div className="p-2">
-                             <div className="flex justify-between items-center p-2 hover:bg-gray-100 rounded cursor-pointer text-gray-600">
+                            <div className="flex justify-between items-center p-2 hover:bg-gray-100 rounded cursor-pointer text-gray-600">
                                 <div className="flex items-center gap-3">
                                     <Users className="h-6 w-6" />
                                     <span>Connections</span>
                                 </div>
                                 <span className="font-semibold text-black">104</span>
-                             </div>
-                             {/* You can add more dummy links here like 'Contacts', 'Following', etc. */}
+                            </div>
+                            {/* You can add more dummy links here like 'Contacts', 'Following', etc. */}
                         </div>
                     </CardContent>
                 </Card>
@@ -34,7 +35,7 @@ export default async function MyNetworkPage() {
 
             {/* Main Content (The Grid) */}
             <div className="md:col-span-3 space-y-4">
-                
+
                 {/* Pending Invitations Section (Placeholder for now) */}
                 <Card>
                     <div className="p-4 flex justify-between items-center">
@@ -45,24 +46,24 @@ export default async function MyNetworkPage() {
 
                 {/* Suggestions Grid */}
                 <div>
-                     <div className="flex justify-between items-center mb-3 px-2">
+                    <div className="flex justify-between items-center mb-3 px-2">
                         <h2 className="font-semibold">People you may know</h2>
                         <button className="text-sm font-semibold text-gray-600 hover:bg-gray-100 px-2 py-1 rounded">See all</button>
-                     </div>
-                     
-                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                         {users.map((user: any) => (
                             <Card key={user.id} className="overflow-hidden flex flex-col items-center pt-6 pb-4 relative hover:shadow-md transition-shadow">
                                 {/* Banner (Fake) */}
                                 <div className="absolute top-0 left-0 right-0 h-14 bg-gray-200 z-0" />
-                                
+
                                 {/* Avatar */}
                                 <Link href={`/profile/${user.id}`} className="relative z-10 h-24 w-24 rounded-full border-2 border-white overflow-hidden cursor-pointer">
-                                    <Image 
-                                        src={user.image || "/images/placeholder.jpg"} 
-                                        alt={user.name} 
-                                        fill 
-                                        className="object-cover" 
+                                    <Image
+                                        src={user.image || "/images/placeholder.jpg"}
+                                        alt={user.name}
+                                        fill
+                                        className="object-cover"
                                     />
                                 </Link>
 
@@ -77,16 +78,16 @@ export default async function MyNetworkPage() {
 
                                 {/* Follow Button */}
                                 <div className="mt-4 w-full px-4">
-                                     <FollowButton 
+                                    <FollowButton
                                         targetUserId={user.id}
                                         targetUserName={user.name}
                                         initialIsFollowing={false}
-                                        // We might want a smaller/outline variant here
-                                     />
+                                    // We might want a smaller/outline variant here
+                                    />
                                 </div>
                             </Card>
                         ))}
-                     </div>
+                    </div>
                 </div>
             </div>
         </div>

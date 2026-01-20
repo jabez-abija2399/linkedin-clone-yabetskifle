@@ -1,4 +1,5 @@
 import { getNotifications, markAsRead } from "@/server/actions/notification.actions";
+export const dynamic = "force-dynamic";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { formatDistanceToNow } from "date-fns";
 import { Heart, MessageSquare, UserPlus } from "lucide-react";

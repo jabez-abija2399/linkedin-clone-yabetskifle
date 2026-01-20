@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+export const dynamic = "force-dynamic";
 import { getConversationById, getUserConversations } from "@/server/actions/message.actions";
 import { MessagingSidebar } from "@/components/messaging/MessagingSidebar";
 import { ChatWindow } from "@/components/messaging/ChatWindow";

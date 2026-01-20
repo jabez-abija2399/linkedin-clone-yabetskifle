@@ -1,4 +1,5 @@
 import { PostCard } from "@/components/post/PostCard";
+export const dynamic = "force-dynamic";
 import { FollowButton } from "@/components/profile/FollowButton";
 import Button from "@/components/ui/Button";
 import { auth } from "@/lib/auth";
@@ -88,7 +89,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                         users.map((user) => (
                             <div key={user.id} className="flex items-center gap-4 py-3 border-b last:border-0">
                                 {/* Avatar */}
-                                <div className="relative h-12 w-12 flex-shrink-0">
+                                <div className="relative h-12 w-12 shrink-0">
                                     <Image
                                         src={user.image || "/images/placeholder.jpg"}
                                         alt={user.name || "User"}
@@ -104,21 +105,21 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                                     <p className="text-xs text-muted truncate">{user.headline || "LinkedIn User"}</p>
                                 </div>
                                 {/* Action */}
-                                  <div className="flex items-center gap-2"> {/* Change Link to div wrapper */}
-                                {/* The new Follow Button */}
-                                {session?.user?.id !== user.id && (
-                                    <FollowButton
-                                        targetUserId={user.id}
-                                        initialIsFollowing={user.followers.length > 0} 
-                                        targetUserName={user.name}
-                                    />
-                                )}
-                                
-                                {/* Existing View Profile Button */}
-                                <Link href={`/profile/${user.id}`}>
-                                    <Button variant="outline" size="sm">View Profile</Button>
-                                </Link>
-                            </div>
+                                <div className="flex items-center gap-2"> {/* Change Link to div wrapper */}
+                                    {/* The new Follow Button */}
+                                    {session?.user?.id !== user.id && (
+                                        <FollowButton
+                                            targetUserId={user.id}
+                                            initialIsFollowing={user.followers.length > 0}
+                                            targetUserName={user.name}
+                                        />
+                                    )}
+
+                                    {/* Existing View Profile Button */}
+                                    <Link href={`/profile/${user.id}`}>
+                                        <Button variant="outline" size="sm">View Profile</Button>
+                                    </Link>
+                                </div>
                             </div>
                         ))
                     )}
