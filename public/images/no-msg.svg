@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" fill="transparent"/>
+  <g opacity="0.6">
+    <!-- Chat bubble -->
+    <path d="M40 50h120c11 0 20 9 20 20v60c0 11-9 20-20 20h-60l-30 25v-25H40c-11 0-20-9-20-20V70c0-11 9-20 20-20z" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2"/>
+    <!-- Dots -->
+    <circle cx="70" cy="100" r="8" fill="#9CA3AF"/>
+    <circle cx="100" cy="100" r="8" fill="#9CA3AF"/>
+    <circle cx="130" cy="100" r="8" fill="#9CA3AF"/>
+  </g>
+</svg>

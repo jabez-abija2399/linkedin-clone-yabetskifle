@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css"; // We will create this next
-import { AuthProvider } from "@/components/privuders/AuthProvider";
-import { ToastProvider } from "@/components/privuders/ToastProvider";
+import "./globals.css";
+import { AuthProvider } from "@/components/providers/AuthProvider";
+import { ToastProvider } from "@/components/providers/ToastProvider";
 
 export const metadata: Metadata = {
   title: "LinkedIn Clone",
